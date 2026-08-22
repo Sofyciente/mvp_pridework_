@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PrideWork - Encontre seu próximo emprego</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="#" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+
+            <div class="menu">
+
+                <a href="#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Encontre oportunidades.
+                Conheça as empresas.
+            </h1>
+
+
+            <p>
+                Encontre vagas de emprego e tenha mais
+                informações sobre as empresas antes de
+                tomar sua decisão.
+            </p>
+
+
+            <div class="search-container">
+
+                <div class="search-box">
+
+
+                    <div class="campo-container">
+
+                        <input
+                            type="text"
+                            id="campoBusca"
+                            placeholder="Cargo, palavra-chave ou empresa"
+                            autocomplete="off"
+                        >
+
+                        <div
+                            id="sugestoes"
+                            class="sugestoes"
+                        ></div>
+
+                    </div>
+
+
+                    <input
+                        type="text"
+                        id="campoLocalizacao"
+                        placeholder="Cidade ou estado"
+                    >
+
+
+                    <button
+                        id="botaoBuscar"
+                        class="search-button"
+                    >
+                        Buscar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+<!-- ==========================================
+     VAGAS EM DESTAQUE
+     ========================================== -->
+
+<section class="destaques">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Vagas em destaque
+                </h2>
+
+                <p>
+                    Algumas oportunidades que podem combinar
+                    com seu perfil.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="vagasDestaque"
+            class="cards"
+        >
+
+            <p>
+                Carregando vagas...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <main id="vagas">
+
+
+        <section class="container">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Vagas disponíveis
+                    </h2>
+
+                    <p>
+                        Encontre oportunidades que combinam
+                        com seu perfil.
+                    </p>
+
+                </div>
+
+
+                <span
+                    id="contadorResultados"
+                    class="contador"
+                >
+                    Carregando vagas...
+                </span>
+
+            </div>
+
+
+            <div
+                id="resultados"
+                class="cards"
+            >
+
+                <p id="mensagemInicial">
+                    Carregando vagas...
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="container">
+
+
+            <div class="transparency">
+
+                <div class="transparency-text">
+
+                    <h2>
+                        Antes de aceitar uma vaga,
+                        conheça a empresa.
+                    </h2>
+
+
+                    <p>
+                        A PrideWork busca promover mais
+                        transparência e informação para
+                        profissionais durante sua busca
+                        por oportunidades.
+                    </p>
+
+
+                    <a href="#" class="button">
+                        Pesquisar empresa
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <section class="container">
+
+
+            <div class="denuncia">
+
+                <div>
+
+                    <h2>
+                        Sua experiência pode ajudar
+                        outras pessoas.
+                    </h2>
+
+
+                    <p>
+                        Relate situações de má conduta
+                        para ajudar nossa comunidade a
+                        encontrar informações importantes.
+                    </p>
+
+                </div>
+
+
+                <a href="#" class="button">
+                    Fazer uma denúncia
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
