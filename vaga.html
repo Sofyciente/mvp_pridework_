@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vaga - PrideWork</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="vaga-detalhes-container">
+
+            <a
+                href="index.html#vagas"
+                class="voltar"
+            >
+                ← Voltar para vagas
+            </a>
+
+            <div
+                id="vagaDetalhes"
+                class="vaga-detalhes"
+            >
+
+                <p>
+                    Carregando vaga...
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        let vagas = [];
+
+        let vagaAtual = null;
+
+        const parametros =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const id =
+            Number(
+                parametros.get("id")
+            );
+
+        fetch("vagas.json")
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Não foi possível carregar vagas.json"
+                    );
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                vagas = data;
+
+                vagaAtual = vagas.find(
+                    vaga => vaga.id === id
+                );
+
+                if (!vagaAtual) {
+
+                    document.getElementById(
+                        "vagaDetalhes"
+                    ).innerHTML = `
+
+                        <div class="erro-vaga">
+
+                            <h2>
+                                Vaga não encontrada
+                            </h2>
+
+                            <p>
+                                Essa oportunidade pode ter sido removida
+                                ou não existe.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+                }
+
+                document.title =
+                    `${vagaAtual.titulo} - PrideWork`;
+
+                mostrarDetalhesDaVaga();
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Erro ao carregar vaga:",
+                    error
+                );
+
+                document.getElementById(
+                    "vagaDetalhes"
+                ).innerHTML = `
+
+                    <div class="erro-vaga">
+
+                        <h2>
+                            Não foi possível carregar a vaga.
+                        </h2>
+
+                        <p>
+                            Verifique se o arquivo vagas.json
+                            está funcionando corretamente.
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
+        function mostrarDetalhesDaVaga() {
+
+            const requisitos =
+                vagaAtual.requisitos
+                    .map(
+                        requisito =>
+                            `<li>${requisito}</li>`
+                    )
+                    .join("");
+
+            const beneficios =
+                vagaAtual.beneficios
+                    .map(
+                        beneficio =>
+                            `<li>${beneficio}</li>`
+                    )
+                    .join("");
+
+            document.getElementById(
+                "vagaDetalhes"
+            ).innerHTML = `
+
+                <div class="vaga-cabecalho">
+
+                    <div>
+
+                        <span class="tag">
+                            ${vagaAtual.categoria}
+                        </span>
+
+                        <h1>
+                            ${vagaAtual.titulo}
+                        </h1>
+
+                        <h2>
+                            ${vagaAtual.empresa}
+                        </h2>
+
+                        <p class="vaga-local">
+                            ${vagaAtual.localizacao}
+                        </p>
+
+                    </div>
+
+                    <div class="vaga-acoes">
+
+                        <button
+                            class="botao-candidatar"
+                            onclick="candidatarSe()"
+                        >
+                            Candidatar-se
+                        </button>
+
+                        <button
+                            class="botao-salvar"
+                            onclick="salvarVaga()"
+                        >
+                            ♡ Salvar vaga
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="vaga-grid">
+
+                    <div class="vaga-principal">
+
+                        <section class="vaga-secao">
+
+                            <h2>
+                                Sobre a vaga
+                            </h2>
+
+                            <p>
+                                ${vagaAtual.descricao}
+                            </p>
+
+                        </section>
+
+                        <section class="vaga-secao">
+
+                            <h2>
+                                Requisitos
+                            </h2>
+
+                            <ul>
+                                ${requisitos}
+                            </ul>
+
+                        </section>
+
+                        <section class="vaga-secao">
+
+                            <h2>
+                                Benefícios
+                            </h2>
+
+                            <ul>
+                                ${beneficios}
+                            </ul>
+
+                        </section>
+
+                    </div>
+
+                    <aside class="vaga-sidebar">
+
+                        <div class="info-vaga">
+
+                            <h3>
+                                Informações
+                            </h3>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Salário
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.salario}
+                                </span>
+
+                            </div>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Modalidade
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.modalidade}
+                                </span>
+
+                            </div>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Contrato
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.tipo}
+                                </span>
+
+                            </div>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Nível
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.nivel}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="empresa-card">
+
+                            <h3>
+                                Sobre a empresa
+                            </h3>
+
+                            <p>
+                                ${vagaAtual.empresa}
+                            </p>
+
+                            <a href="#">
+                                Ver perfil da empresa →
+                            </a>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            `;
+
+        }
+
+        function candidatarSe() {
+
+            if (!vagaAtual) {
+                return;
+            }
+
+            window.location.href =
+                `candidatura.html?id=${vagaAtual.id}`;
+
+        }
+
+        function salvarVaga() {
+
+            alert(
+                "A função de salvar vagas estará disponível em breve."
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
