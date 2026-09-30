@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Denunciar empresa - PrideWork</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html" class="menu-ativo">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="denuncia-container">
+
+            <div class="denuncia-introducao">
+
+                <span class="tag">
+                    Segurança e transparência
+                </span>
+
+                <h1>
+                    Denuncie uma empresa
+                </h1>
+
+                <p>
+                    A PrideWork permite que trabalhadores e candidatos
+                    relatem possíveis situações de má conduta,
+                    contribuindo para um mercado de trabalho mais
+                    transparente e seguro.
+                </p>
+
+            </div>
+
+            <div class="aviso-denuncia">
+
+                <strong>
+                    Antes de enviar
+                </strong>
+
+                <p>
+                    Uma denúncia representa um relato e não significa
+                    que a empresa tenha cometido uma irregularidade.
+                    As informações poderão ser analisadas antes de
+                    qualquer publicação ou medida.
+                </p>
+
+            </div>
+
+            <div class="denuncia-card">
+
+                <form id="formDenuncia">
+
+                    <div class="campo">
+
+                        <label for="empresa">
+                            Empresa denunciada
+                        </label>
+
+                        <input
+                            type="text"
+                            id="empresa"
+                            placeholder="Digite o nome da empresa"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="categoria">
+                            Motivo da denúncia
+                        </label>
+
+                        <select id="categoria" required>
+
+                            <option value="">
+                                Selecione uma categoria
+                            </option>
+
+                            <option value="desrespeito">
+                                Desrespeito no ambiente de trabalho
+                            </option>
+
+                            <option value="direitos">
+                                Descumprimento de direitos trabalhistas
+                            </option>
+
+                            <option value="salario">
+                                Problemas relacionados a salário ou pagamento
+                            </option>
+
+                            <option value="assedio">
+                                Assédio ou discriminação
+                            </option>
+
+                            <option value="seguranca">
+                                Falta de segurança no trabalho
+                            </option>
+
+                            <option value="justica">
+                                Histórico ou problemas judiciais
+                            </option>
+
+                            <option value="outro">
+                                Outro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="descricao">
+                            Descreva o ocorrido
+                        </label>
+
+                        <textarea
+                            id="descricao"
+                            rows="8"
+                            placeholder="Explique com o máximo de detalhes possível o que aconteceu..."
+                            required
+                        ></textarea>
+
+                        <small>
+                            Evite inserir informações pessoais
+                            desnecessárias de outras pessoas.
+                        </small>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="data">
+                            Quando aconteceu?
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="evidencia">
+                            Evidências
+                        </label>
+
+                        <input
+                            type="file"
+                            id="evidencia"
+                            accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+                        >
+
+                        <small>
+                            Você poderá anexar documentos ou imagens
+                            relacionados à denúncia.
+                        </small>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label>
+                            Deseja manter sua identidade privada?
+                        </label>
+
+                        <div class="opcoes-radio">
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="privacidade"
+                                    value="sim"
+                                    checked
+                                >
+
+                                Sim, manter minha identidade privada
+
+                            </label>
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="privacidade"
+                                    value="nao"
+                                >
+
+                                Não, posso ser identificado
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="checkbox-denuncia">
+
+                        <input
+                            type="checkbox"
+                            id="responsabilidade"
+                            required
+                        >
+
+                        <label for="responsabilidade">
+
+                            Confirmo que as informações fornecidas
+                            representam meu relato dos acontecimentos
+                            e que não estou utilizando a plataforma
+                            deliberadamente para fornecer informações
+                            falsas.
+
+                        </label>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="botao-enviar-denuncia"
+                    >
+                        Enviar denúncia
+                    </button>
+
+                </form>
+
+                <div
+                    id="sucessoDenuncia"
+                    class="sucesso-denuncia"
+                    style="display: none;"
+                >
+
+                    <div class="icone-sucesso">
+                        ✓
+                    </div>
+
+                    <h2>
+                        Denúncia registrada
+                    </h2>
+
+                    <p>
+                        Obrigado por contribuir com a transparência
+                        do mercado de trabalho.
+                    </p>
+
+                    <p>
+                        Sua denúncia será encaminhada para análise.
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="botao-voltar-vagas"
+                    >
+                        Voltar para a PrideWork
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        document
+            .getElementById("formDenuncia")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                document.getElementById(
+                    "formDenuncia"
+                ).style.display = "none";
+
+                document.getElementById(
+                    "sucessoDenuncia"
+                ).style.display = "block";
+
+            });
+
+    </script>
+
+</body>
+
+</html>
