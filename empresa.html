@@ -46,6 +46,335 @@
 </footer>
 <script>
 const companies = [{"nome": "NovaCorp", "area": "Serviços corporativos e operações", "slogan": "Organizando processos para empresas crescerem melhor.", "sobre": "A NovaCorp é uma empresa fictícia de serviços corporativos que apoia organizações em rotinas administrativas, gestão de documentos e melhoria de processos. Seu trabalho combina organização operacional, atendimento interno e padronização de atividades para que as equipes possam focar em suas prioridades.", "sede": "São Paulo, SP", "fundacao": "2016", "porte": "201-500 funcionários", "especialidades": ["Operações administrativas", "Gestão de processos", "Serviços corporativos"], "seguidores": "12.480", "theme": "theme-indigo"}, {"nome": "DataVision", "area": "Tecnologia, dados e inteligência de negócios", "slogan": "Transformando dados em decisões mais claras.", "sobre": "A DataVision é uma empresa fictícia de tecnologia que desenvolve soluções de análise de dados e inteligência de negócios. Atua com painéis gerenciais, indicadores, integração de bases e automação de relatórios para apoiar decisões em diferentes áreas.", "sede": "São Paulo, SP", "fundacao": "2018", "porte": "51-200 funcionários", "especialidades": ["Análise de dados", "Business Intelligence", "SQL e automação"], "seguidores": "8.730", "theme": "theme-blue"}, {"nome": "PeopleFirst", "area": "Recursos Humanos e desenvolvimento de pessoas", "slogan": "Pessoas no centro de cada oportunidade.", "sobre": "A PeopleFirst é uma consultoria fictícia de recursos humanos que apoia empresas em recrutamento, seleção, integração e desenvolvimento de talentos. A companhia trabalha para tornar os processos de contratação mais organizados e melhorar a experiência de candidatos e equipes.", "sede": "Sorocaba, SP", "fundacao": "2017", "porte": "51-200 funcionários", "especialidades": ["Recrutamento e seleção", "Treinamento", "Gestão de pessoas"], "seguidores": "6.920", "theme": "theme-violet"}, {"nome": "Vértice Engenharia", "area": "Engenharia e construção", "slogan": "Projetos sólidos, soluções duradouras.", "sobre": "A Vértice Engenharia é uma empresa fictícia de projetos e obras que atende clientes comerciais e industriais. Reúne equipes de planejamento, orçamento, acompanhamento de obras e segurança para conduzir projetos do estudo inicial à entrega.", "sede": "Campinas, SP", "fundacao": "2012", "porte": "201-500 funcionários", "especialidades": ["Planejamento de obras", "Orçamentos", "Gestão de projetos"], "seguidores": "9.140", "theme": "theme-teal"}, {"nome": "Aurora Saúde", "area": "Saúde e serviços clínicos", "slogan": "Cuidado próximo, gestão responsável.", "sobre": "A Aurora Saúde é uma rede fictícia de clínicas e serviços ambulatoriais. Sua operação integra atendimento ao público, equipes clínicas, gestão de agendas e áreas administrativas para oferecer uma experiência acolhedora e organizada.", "sede": "São Paulo, SP", "fundacao": "2015", "porte": "201-500 funcionários", "especialidades": ["Atendimento ao paciente", "Operações clínicas", "Gestão de saúde"], "seguidores": "14.600", "theme": "theme-rose"}, {"nome": "NexoLog", "area": "Logística e cadeia de suprimentos", "slogan": "Conectando estoques, rotas e pessoas.", "sobre": "A NexoLog é uma operadora logística fictícia especializada em armazenagem, distribuição e acompanhamento de entregas. Utiliza indicadores operacionais e planejamento de rotas para apoiar clientes de varejo e indústria.", "sede": "Guarulhos, SP", "fundacao": "2014", "porte": "501-1.000 funcionários", "especialidades": ["Logística", "Controle de estoque", "Distribuição"], "seguidores": "11.250", "theme": "theme-amber"}, {"nome": "VerdeVivo Sustentabilidade", "area": "Meio ambiente e sustentabilidade", "slogan": "Soluções práticas para um futuro mais sustentável.", "sobre": "A VerdeVivo é uma consultoria fictícia que auxilia empresas em projetos de sustentabilidade, gestão de resíduos, educação ambiental e acompanhamento de indicadores socioambientais.", "sede": "Curitiba, PR", "fundacao": "2019", "porte": "11-50 funcionários", "especialidades": ["Gestão ambiental", "Relatórios ESG", "Educação ambiental"], "seguidores": "4.380", "theme": "theme-indigo"}, {"nome": "PontoCerto Contábil", "area": "Contabilidade e consultoria financeira", "slogan": "Clareza financeira para decisões seguras.", "sobre": "A PontoCerto Contábil é um escritório fictício que oferece serviços contábeis, fiscais e de apoio financeiro para pequenas e médias empresas. A equipe trabalha com organização documental, fechamento contábil e orientação sobre rotinas empresariais.", "sede": "Santo André, SP", "fundacao": "2011", "porte": "11-50 funcionários", "especialidades": ["Contabilidade", "Fiscal e tributário", "BPO financeiro"], "seguidores": "3.960", "theme": "theme-blue"}, {"nome": "Conecta Telecom", "area": "Telecomunicações e atendimento", "slogan": "Conexões confiáveis para o dia a dia.", "sobre": "A Conecta Telecom é uma empresa fictícia de serviços de conectividade para clientes residenciais e empresariais. Atua com suporte técnico, relacionamento com clientes, instalação e acompanhamento de qualidade.", "sede": "São Bernardo do Campo, SP", "fundacao": "2013", "porte": "201-500 funcionários", "especialidades": ["Telecomunicações", "Suporte técnico", "Experiência do cliente"], "seguidores": "7.510", "theme": "theme-violet"}, {"nome": "Lumina Design", "area": "Design, comunicação e marketing", "slogan": "Marcas com propósito e experiências memoráveis.", "sobre": "A Lumina Design é um estúdio fictício de comunicação que desenvolve identidades visuais, campanhas digitais e materiais para marcas. Trabalha em parceria com clientes para transformar objetivos de negócio em soluções criativas.", "sede": "São Paulo, SP", "fundacao": "2020", "porte": "11-50 funcionários", "especialidades": ["Design gráfico", "Marketing digital", "Identidade de marca"], "seguidores": "5.270", "theme": "theme-teal"}, {"nome": "Atlas Educação", "area": "Educação e tecnologia educacional", "slogan": "Aprender abre novos caminhos.", "sobre": "A Atlas Educação é uma organização fictícia que desenvolve cursos, materiais didáticos e soluções de aprendizagem para estudantes e empresas. Sua equipe reúne profissionais de conteúdo, tecnologia e apoio acadêmico.", "sede": "Ribeirão Preto, SP", "fundacao": "2016", "porte": "51-200 funcionários", "especialidades": ["Educação corporativa", "Conteúdo didático", "Tecnologia educacional"], "seguidores": "6.140", "theme": "theme-rose"}, {"nome": "Orbe Financeira", "area": "Serviços financeiros e planejamento", "slogan": "Mais organização para a vida financeira.", "sobre": "A Orbe Financeira é uma empresa fictícia de serviços de planejamento e apoio financeiro. Desenvolve análises, relatórios e processos de atendimento para pessoas e pequenos negócios, com foco em clareza e organização.", "sede": "São Paulo, SP", "fundacao": "2018", "porte": "51-200 funcionários", "especialidades": ["Planejamento financeiro", "Análise de crédito", "Relacionamento"], "seguidores": "8.020", "theme": "theme-amber"}, {"nome": "CampoNobre Alimentos", "area": "Agronegócio e indústria alimentícia", "slogan": "Da origem à mesa, com cuidado em cada etapa.", "sobre": "A CampoNobre é uma empresa fictícia do setor de alimentos que coordena atividades de produção, qualidade, armazenagem e distribuição. Suas equipes acompanham padrões operacionais e processos de melhoria contínua.", "sede": "Ribeirão Preto, SP", "fundacao": "2009", "porte": "501-1.000 funcionários", "especialidades": ["Qualidade de alimentos", "Produção", "Cadeia de suprimentos"], "seguidores": "10.870", "theme": "theme-indigo"}, {"nome": "Prisma Jurídico", "area": "Serviços jurídicos empresariais", "slogan": "Orientação jurídica próxima e objetiva.", "sobre": "O Prisma Jurídico é um escritório fictício que presta apoio jurídico a empresas em contratos, organização documental e acompanhamento de demandas. O perfil institucional é demonstrativo e não representa um escritório real.", "sede": "São Paulo, SP", "fundacao": "2014", "porte": "11-50 funcionários", "especialidades": ["Contratos", "Direito empresarial", "Pesquisa jurídica"], "seguidores": "4.710", "theme": "theme-blue"}, {"nome": "RotaSul Transportes", "area": "Transporte e mobilidade", "slogan": "Movimentando pessoas e negócios com planejamento.", "sobre": "A RotaSul é uma transportadora fictícia que opera serviços de transporte e distribuição regional. A empresa reúne equipes de tráfego, atendimento, manutenção e planejamento para acompanhar a operação diária.", "sede": "Joinville, SC", "fundacao": "2010", "porte": "201-500 funcionários", "especialidades": ["Gestão de frota", "Planejamento de rotas", "Operações"], "seguidores": "7.890", "theme": "theme-violet"}, {"nome": "Mosaico Varejo", "area": "Comércio e varejo", "slogan": "Experiências de compra simples e humanas.", "sobre": "A Mosaico Varejo é uma rede fictícia de lojas de utilidades e produtos para o dia a dia. Atua em operações de loja, atendimento, compras, estoque e canais digitais, buscando integrar a experiência presencial e online.", "sede": "Osasco, SP", "fundacao": "2017", "porte": "501-1.000 funcionários", "especialidades": ["Operações de loja", "Vendas", "Gestão de estoque"], "seguidores": "13.300", "theme": "theme-teal"}, {"nome": "ByteForge Sistemas", "area": "Desenvolvimento de software", "slogan": "Software útil, equipes colaborativas.", "sobre": "A ByteForge Sistemas é uma empresa fictícia de desenvolvimento de software que cria aplicações web e ferramentas internas para clientes de diferentes setores. Trabalha com ciclos curtos de entrega, documentação e colaboração entre áreas técnicas e de produto.", "sede": "Florianópolis, SC", "fundacao": "2021", "porte": "51-200 funcionários", "especialidades": ["Desenvolvimento web", "Qualidade de software", "Produto digital"], "seguidores": "6.780", "theme": "theme-rose"}, {"nome": "Horizonte Energia", "area": "Energia e infraestrutura", "slogan": "Energia para projetos que movem o futuro.", "sobre": "A Horizonte Energia é uma empresa fictícia de serviços e projetos ligados à eficiência energética. Suas equipes apoiam estudos técnicos, acompanhamento de indicadores e iniciativas de melhoria em instalações comerciais.", "sede": "Belo Horizonte, MG", "fundacao": "2016", "porte": "51-200 funcionários", "especialidades": ["Eficiência energética", "Projetos", "Análise técnica"], "seguidores": "5.940", "theme": "theme-amber"}];
+const demoReports = {
+    "NovaCorp": [
+        {
+            titulo: "Pequeno atraso no pagamento",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, o pagamento teria sido creditado algumas horas depois do horário habitual. O valor teria sido recebido no mesmo dia."
+        },
+        {
+            titulo: "Comunicação interna pouco clara",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Neste exemplo, mudanças em uma rotina administrativa teriam sido comunicadas em cima da hora, deixando parte da equipe com dúvidas sobre as prioridades."
+        }
+    ],
+    "DataVision": [
+        {
+            titulo: "Horas extras sem planejamento",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação hipotética, uma entrega urgente teria exigido que parte da equipe permanecesse além do horário previsto, com pouco aviso prévio."
+        },
+        {
+            titulo: "Orientações divergentes",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Este relato fictício descreve uma atividade em que duas lideranças teriam passado instruções diferentes, causando retrabalho."
+        }
+    ],
+    "PeopleFirst": [
+        {
+            titulo: "Processo seletivo sem retorno",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Neste cenário fictício, uma pessoa candidata teria concluído as etapas da seleção, mas não recebido uma atualização sobre o resultado."
+        },
+        {
+            titulo: "Integração de novos funcionários",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Um exemplo hipotético de contratação em que as orientações iniciais teriam sido insuficientes para que a pessoa entendesse todas as tarefas."
+        }
+    ],
+    "Vértice Engenharia": [
+        {
+            titulo: "Alterações no cronograma",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, mudanças no cronograma de uma obra teriam sido comunicadas com pouco tempo para reorganizar as atividades."
+        },
+        {
+            titulo: "Equipamentos compartilhados",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo descreve dificuldades para reservar equipamentos de uso comum, provocando espera e atrasos em algumas tarefas."
+        }
+    ],
+    "Aurora Saúde": [
+        {
+            titulo: "Escala divulgada em cima da hora",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação hipotética, alterações na escala teriam sido informadas com pouca antecedência, dificultando a organização pessoal."
+        },
+        {
+            titulo: "Demora em responder solicitações",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Neste exemplo fictício, pedidos administrativos da equipe teriam levado alguns dias a mais do que o esperado para receber resposta."
+        }
+    ],
+    "NexoLog": [
+        {
+            titulo: "Mudança de rota sem aviso",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, uma alteração de rota teria sido comunicada durante o expediente, exigindo reorganização das entregas."
+        },
+        {
+            titulo: "Pausa operacional mal organizada",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo descreve um turno em que a distribuição das pausas teria sido pouco equilibrada entre os integrantes da equipe."
+        }
+    ],
+    "VerdeVivo Sustentabilidade": [
+        {
+            titulo: "Prioridades alteradas",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação hipotética, prioridades de um relatório teriam mudado perto da data de entrega, exigindo ajustes no planejamento."
+        },
+        {
+            titulo: "Acúmulo de tarefas em período de entrega",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este relato fictício apresenta uma semana de entregas simultâneas em que a divisão de tarefas não teria sido suficiente."
+        }
+    ],
+    "PontoCerto Contábil": [
+        {
+            titulo: "Reembolso pago com atraso",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Neste cenário fictício, um reembolso teria sido pago no próximo ciclo administrativo, alguns dias depois do previsto."
+        },
+        {
+            titulo: "Pico de trabalho no fechamento mensal",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Um exemplo hipotético de fechamento contábil em que a equipe teria recebido várias demandas urgentes ao mesmo tempo."
+        }
+    ],
+    "Conecta Telecom": [
+        {
+            titulo: "Demora na liberação de ferramentas",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação fictícia, uma pessoa recém-contratada teria aguardado alguns dias para receber acesso a ferramentas de trabalho."
+        },
+        {
+            titulo: "Metas pouco explicadas",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo descreve metas de atendimento que teriam sido alteradas sem uma explicação suficientemente clara para a equipe."
+        }
+    ],
+    "Lumina Design": [
+        {
+            titulo: "Alterações frequentes em projetos",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, pedidos de alteração após a aprovação de uma peça teriam provocado retrabalho."
+        },
+        {
+            titulo: "Prazos apertados em campanhas",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este relato hipotético descreve uma campanha com prazo reduzido e pouca margem para revisar os materiais."
+        }
+    ],
+    "Atlas Educação": [
+        {
+            titulo: "Mudança de sala sem aviso",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Neste exemplo fictício, uma alteração de sala teria sido comunicada pouco antes do início de uma atividade."
+        },
+        {
+            titulo: "Distribuição de tarefas em período de provas",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário hipotético, a equipe teria recebido várias demandas acadêmicas simultâneas durante um período de alta procura."
+        }
+    ],
+    "Orbe Financeira": [
+        {
+            titulo: "Sistema indisponível no expediente",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo fictício descreve uma indisponibilidade temporária de sistema que atrasou algumas tarefas."
+        },
+        {
+            titulo: "Cobrança de metas em período movimentado",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação hipotética, a equipe teria recebido cobranças por resultados durante um período de volume elevado de solicitações."
+        }
+    ],
+    "CampoNobre Alimentos": [
+        {
+            titulo: "Troca de turno comunicada tarde",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, uma troca de turno teria sido informada com pouca antecedência."
+        },
+        {
+            titulo: "Treinamento insuficiente em procedimento",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo hipotético descreve uma pessoa que teria começado uma atividade sem receber todas as orientações esperadas."
+        }
+    ],
+    "Prisma Jurídico": [
+        {
+            titulo: "Revisões de documentos fora do prazo",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Neste cenário fictício, revisões solicitadas perto do fim do expediente teriam exigido reorganização das tarefas."
+        },
+        {
+            titulo: "Acúmulo de demandas urgentes",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Um exemplo hipotético de semana em que várias demandas urgentes teriam sido distribuídas à mesma equipe."
+        }
+    ],
+    "RotaSul Transportes": [
+        {
+            titulo: "Escala atualizada com pouco aviso",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação fictícia, uma alteração de escala teria sido comunicada pouco antes do início do turno."
+        },
+        {
+            titulo: "Manutenção causando espera",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este relato de demonstração descreve uma equipe que teria aguardado a liberação de um veículo após uma manutenção não prevista."
+        }
+    ],
+    "Mosaico Varejo": [
+        {
+            titulo: "Intervalo reorganizado",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, o intervalo de parte da equipe teria sido deslocado devido ao movimento da loja."
+        },
+        {
+            titulo: "Equipe reduzida em dia movimentado",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo hipotético descreve um dia de grande movimento em que a quantidade de funcionários teria sido insuficiente para atender à demanda com tranquilidade."
+        }
+    ],
+    "ByteForge Sistemas": [
+        {
+            titulo: "Mudanças no escopo de uma tarefa",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em uma situação fictícia, requisitos de uma tarefa teriam sido alterados depois do início do desenvolvimento."
+        },
+        {
+            titulo: "Prazo de entrega pouco realista",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo descreve uma entrega planejada com prazo curto, exigindo que a equipe renegociasse prioridades."
+        }
+    ],
+    "Horizonte Energia": [
+        {
+            titulo: "Atraso em aprovação interna",
+            gravidade: "Baixa",
+            data: "Exemplo demonstrativo",
+            texto: "Em um cenário fictício, uma aprovação interna teria demorado mais que o previsto, adiando uma etapa do projeto."
+        },
+        {
+            titulo: "Mudança de prioridade durante projeto",
+            gravidade: "Moderada",
+            data: "Exemplo demonstrativo",
+            texto: "Este exemplo hipotético descreve uma alteração de prioridade que teria exigido redistribuir atividades entre integrantes da equipe."
+        }
+    ]
+};
+
+const demoReviews = {
+    "NovaCorp": [
+        {nome:"Marina S.", estrelas:4, texto:"Equipe organizada e colegas dispostos a ajudar. Em alguns períodos, a comunicação poderia ser melhor."},
+        {nome:"Rafael M.", estrelas:3, texto:"Experiência razoável. Os processos são claros, mas algumas decisões demoram."}
+    ],
+    "DataVision": [
+        {nome:"Camila R.", estrelas:5, texto:"Aprendi bastante e tive contato com projetos interessantes. Boa troca entre colegas."},
+        {nome:"Bruno A.", estrelas:3, texto:"Ambiente de aprendizado, mas os prazos podem ficar apertados."}
+    ],
+    "PeopleFirst": [
+        {nome:"Juliana P.", estrelas:4, texto:"Time acolhedor e oportunidades de desenvolvimento. A integração poderia ser mais completa."},
+        {nome:"André L.", estrelas:3, texto:"Boa experiência no geral, com alguns processos internos que poderiam ser mais rápidos."}
+    ],
+    "Vértice Engenharia": [
+        {nome:"Lucas F.", estrelas:4, texto:"Projetos interessantes e bastante aprendizado prático."},
+        {nome:"Fernanda C.", estrelas:3, texto:"Boa experiência técnica, embora mudanças de cronograma exijam flexibilidade."}
+    ],
+    "Aurora Saúde": [
+        {nome:"Patrícia N.", estrelas:4, texto:"Equipe comprometida e ambiente de trabalho colaborativo."},
+        {nome:"Diego T.", estrelas:3, texto:"O trabalho é importante, mas a organização das escalas pode melhorar."}
+    ],
+    "NexoLog": [
+        {nome:"Thiago B.", estrelas:4, texto:"Rotina dinâmica e equipe parceira."},
+        {nome:"Aline G.", estrelas:3, texto:"Aprendi bastante, mas alguns dias são bem corridos."}
+    ],
+    "VerdeVivo Sustentabilidade": [
+        {nome:"Isabela D.", estrelas:5, texto:"Projetos com propósito e uma equipe que compartilha conhecimento."},
+        {nome:"Caio V.", estrelas:4, texto:"Ambiente agradável. O planejamento de prazos pode melhorar em épocas movimentadas."}
+    ],
+    "PontoCerto Contábil": [
+        {nome:"Renata O.", estrelas:4, texto:"Aprendi muito sobre rotinas contábeis e organização financeira."},
+        {nome:"Felipe H.", estrelas:3, texto:"Boa oportunidade para aprender, especialmente nos fechamentos mensais."}
+    ],
+    "Conecta Telecom": [
+        {nome:"Beatriz K.", estrelas:4, texto:"Colegas prestativos e aprendizado técnico constante."},
+        {nome:"Murilo E.", estrelas:3, texto:"A rotina é interessante, mas algumas metas poderiam ser explicadas melhor."}
+    ],
+    "Lumina Design": [
+        {nome:"Lívia W.", estrelas:5, texto:"Espaço para criatividade e projetos variados."},
+        {nome:"Pedro J.", estrelas:3, texto:"Trabalho criativo, mas mudanças de última hora acontecem."}
+    ],
+    "Atlas Educação": [
+        {nome:"Sofia Q.", estrelas:4, texto:"Ambiente acolhedor e contato com pessoas de diferentes áreas."},
+        {nome:"Vitor Z.", estrelas:3, texto:"Boa experiência, com períodos de bastante demanda."}
+    ],
+    "Orbe Financeira": [
+        {nome:"Natália Y.", estrelas:4, texto:"Equipe colaborativa e oportunidade de desenvolver habilidades analíticas."},
+        {nome:"Gustavo P.", estrelas:3, texto:"O trabalho é interessante, mas há períodos de cobrança intensa."}
+    ],
+    "CampoNobre Alimentos": [
+        {nome:"Elaine B.", estrelas:4, texto:"Aprendizado prático e colegas experientes."},
+        {nome:"Roberto C.", estrelas:3, texto:"A rotina funciona bem, mas a comunicação de mudanças poderia melhorar."}
+    ],
+    "Prisma Jurídico": [
+        {nome:"Amanda F.", estrelas:4, texto:"Bom contato com documentos e rotinas profissionais."},
+        {nome:"Daniel R.", estrelas:3, texto:"Aprendi bastante, embora algumas semanas sejam bem intensas."}
+    ],
+    "RotaSul Transportes": [
+        {nome:"Marcelo S.", estrelas:4, texto:"Equipe experiente e rotina que ensina bastante."},
+        {nome:"Débora M.", estrelas:3, texto:"A operação é dinâmica e exige boa organização."}
+    ],
+    "Mosaico Varejo": [
+        {nome:"Carolina T.", estrelas:4, texto:"Equipe próxima e contato direto com clientes."},
+        {nome:"Eduardo N.", estrelas:3, texto:"O trabalho é movimentado e a distribuição das tarefas pode melhorar."}
+    ],
+    "ByteForge Sistemas": [
+        {nome:"Vinícius A.", estrelas:5, texto:"Boa colaboração técnica e oportunidade de aprender novas ferramentas."},
+        {nome:"Mirela S.", estrelas:4, texto:"Projetos interessantes. Em algumas entregas, os prazos ficam apertados."}
+    ],
+    "Horizonte Energia": [
+        {nome:"Gabriel L.", estrelas:4, texto:"Projetos variados e aprendizado com profissionais experientes."},
+        {nome:"Priscila R.", estrelas:3, texto:"Boa experiência, mas algumas aprovações internas demoram."}
+    ]
+};
 const params = new URLSearchParams(window.location.search);
 const requestedName = params.get("nome");
 const profileRoot = document.getElementById("companyProfile");
@@ -76,6 +405,102 @@ function miniCard(company, label) {
 }
 function renderError(title, message) {
     profileRoot.innerHTML = `<section class="company-error"><h1>${esc(title)}</h1><p>${esc(message)}</p><a class="company-button" href="index.html#vagas">Ver vagas</a></section>`;
+}
+function renderReviews(companyName) {
+    const reviews = demoReviews[companyName] || [];
+    const total = reviews.length;
+    const average = total
+        ? reviews.reduce((sum, review) => sum + review.estrelas, 0) / total
+        : 0;
+
+    document.getElementById("reviewSummary").innerHTML = `
+        <div class="review-summary">
+            <strong class="review-average">${average.toFixed(1)}</strong>
+            <div>
+                <div class="review-stars">${"★".repeat(Math.round(average))}${"☆".repeat(5 - Math.round(average))}</div>
+                <p>${total} avaliações de demonstração</p>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("reviewList").innerHTML = reviews.map((review, index) => {
+        const key = `pw-helpful-${slug(companyName)}-${index}`;
+        const savedVote = localStorage.getItem(key);
+
+        return `
+            <article class="review-card">
+                <div class="review-card-top">
+                    <div class="review-avatar">${esc(review.nome.slice(0, 1))}</div>
+                    <div class="review-author">
+                        <strong>${esc(review.nome)}</strong>
+                        <span>Avaliação fictícia de demonstração</span>
+                    </div>
+                    <span class="review-demo-badge">Exemplo</span>
+                </div>
+
+                <div class="review-stars">
+                    ${"★".repeat(review.estrelas)}${"☆".repeat(5 - review.estrelas)}
+                </div>
+
+                <p class="review-text">${esc(review.texto)}</p>
+
+                <div class="review-helpful">
+                    <span>Esse comentário foi útil a você?</span>
+                    <button type="button" data-review="${index}" data-vote="sim"
+                        class="${savedVote === "sim" ? "selected" : ""}">
+                        Sim
+                    </button>
+                    <button type="button" data-review="${index}" data-vote="nao"
+                        class="${savedVote === "nao" ? "selected" : ""}">
+                        Não
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join("");
+
+    document.querySelectorAll("[data-review]").forEach(button => {
+        button.addEventListener("click", () => {
+            const key = `pw-helpful-${slug(companyName)}-${button.dataset.review}`;
+            localStorage.setItem(key, button.dataset.vote);
+            renderReviews(companyName);
+        });
+    });
+
+    const form = document.getElementById("demoReviewForm");
+
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const stars = Number(document.getElementById("reviewStars").value);
+        const text = document.getElementById("reviewText").value.trim();
+        const message = document.getElementById("reviewFormMessage");
+
+        if (!text) {
+            message.textContent = "Escreva um comentário antes de publicar.";
+            return;
+        }
+
+        message.textContent =
+            "Avaliação de teste registrada apenas nesta demonstração. Ela não foi enviada ao servidor.";
+        form.reset();
+    }, { once: true });
+}
+
+function renderReports(companyName) {
+    const reports = demoReports[companyName] || [];
+
+    document.getElementById("companyReportList").innerHTML = reports.map(report => `
+        <article class="company-report-card">
+            <div class="report-card-top">
+                <span class="report-demo-label">Relato fictício</span>
+                <span class="report-severity">${esc(report.gravidade)}</span>
+            </div>
+            <h3>${esc(report.titulo)}</h3>
+            <p class="report-date">${esc(report.data)}</p>
+            <p>${esc(report.texto)}</p>
+        </article>
+    `).join("");
 }
 if (!requestedName) {
     renderError("Empresa não informada","Volte às vagas e selecione o perfil de uma empresa.");
@@ -145,6 +570,64 @@ if (!requestedName) {
                         <a class="company-job-link" href="vaga.html?id=${encodeURIComponent(job.id)}">Ver vaga →</a>
                     </article>`).join("")}</div>` : `<p class="company-empty">Ainda não há vagas cadastradas para esta empresa.</p>`}
             </section>
+            <section class="company-panel" id="companyReviews">
+    <div class="company-section-heading">
+        <div>
+            <h2>Avaliações e comentários</h2>
+            <p>Opiniões de demonstração sobre a experiência profissional.</p>
+        </div>
+        <span class="company-job-count">Exemplos fictícios</span>
+    </div>
+
+    <div id="reviewSummary"></div>
+
+    <form id="demoReviewForm" class="review-form">
+        <h3>Deixe uma avaliação de demonstração</h3>
+        <p>Escolha uma nota e escreva um comentário.</p>
+
+        <div class="review-stars-input">
+            <label for="reviewStars">Sua nota</label>
+            <select id="reviewStars" required>
+                <option value="5">★★★★★ - 5 estrelas</option>
+                <option value="4">★★★★☆ - 4 estrelas</option>
+                <option value="3">★★★☆☆ - 3 estrelas</option>
+                <option value="2">★★☆☆☆ - 2 estrelas</option>
+                <option value="1">★☆☆☆☆ - 1 estrela</option>
+            </select>
+        </div>
+
+        <textarea id="reviewText" maxlength="500" required
+            placeholder="Escreva seu comentário de teste..."></textarea>
+
+        <button class="company-button" type="submit">
+            Publicar avaliação de teste
+        </button>
+        <p class="review-form-message" id="reviewFormMessage"></p>
+    </form>
+
+    <div id="reviewList" class="review-list"></div>
+</section>
+
+<section class="company-panel" id="companyReports">
+    <div class="company-section-heading">
+        <div>
+            <h2>Relatos sobre a empresa</h2>
+            <p>Exemplos de como os relatos podem aparecer no PrideWork.</p>
+        </div>
+        <span class="company-job-count">Dados fictícios</span>
+    </div>
+
+    <div class="report-demo-notice">
+        <strong>Área de demonstração</strong>
+        <p>Os casos abaixo foram criados para demonstrar o funcionamento da plataforma. Não são denúncias reais nem afirmações sobre a empresa.</p>
+    </div>
+
+    <div id="companyReportList" class="company-report-list"></div>
+
+    <a class="company-outline-button" href="denunciar.html">
+        Enviar um relato
+    </a>
+</section>
             <section class="company-panel company-community" id="companyCommunity">
                 <h2>Transparência e comunidade</h2>
                 <p>Esta área foi pensada para reunir informações, avaliações e relatos da comunidade sobre experiências profissionais.</p>
@@ -153,6 +636,8 @@ if (!requestedName) {
             </section>`;
         similarRoot.innerHTML = recommendations.slice(0,4).map(item => miniCard(item)).join("");
         followedRoot.innerHTML = recommendations.slice(4,7).map(item => miniCard(item)).join("");
+        renderReviews(company.nome);
+renderReports(company.nome);
     }).catch(() => renderError("Não foi possível carregar o perfil","Confira se vagas.json está na mesma pasta e se o site está aberto pelo Live Server."));
 }
 </script>
