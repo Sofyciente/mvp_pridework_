@@ -1,0 +1,33 @@
+PRIDEWORK — CONFIGURAÇÃO E TESTES DO SUPABASE
+
+1. Abra o projeto no VS Code e inicie pelo Live Server.
+2. O arquivo supabase-config.js já contém a Project URL e a Publishable Key
+   informadas durante esta conversa. A Publishable Key pode ficar no frontend;
+   nunca coloque Secret Key ou service_role em arquivos públicos.
+3. O site carrega uma única instância em window.PRIDEWORK_SUPABASE_CLIENT.
+4. Acesse login.html e teste primeiro com uma conta de candidato.
+5. Para testar empresa, crie uma conta nova escolhendo Empresa. Se a confirmação
+   de e-mail estiver habilitada no Supabase, confirme o e-mail e depois faça login.
+   O login encaminha a conta empresarial para cadastro-empresa.html.
+6. O cadastro empresarial chama a função RPC create_company_profile e envia
+   a empresa com status pending. A aprovação continua sendo feita pelo admin.
+7. O link de recuperação de senha usa redefinir-senha.html.
+
+IMPORTANTE — URL DE REDIRECIONAMENTO:
+No painel Supabase, abra Authentication > URL Configuration. Adicione a URL
+local de desenvolvimento usada pelo Live Server à Redirect URLs, por exemplo:
+http://127.0.0.1:5500/**
+ou
+http://localhost:5500/**
+Use a porta real que aparece no seu navegador. Para produção, adicione também
+o domínio final do site.
+
+OBSERVAÇÃO SOBRE O BANCO:
+Não execute supabase/schema-legado-nao-executar.sql. O banco atual já foi
+configurado no painel e esse arquivo é apenas histórico.
+
+PERFIL DO CANDIDATO
+- A página perfil.html consulta profiles e candidate_profiles para carregar os dados da conta.
+- Para salvar os dados profissionais, ela chama a função RPC save_candidate_profile já criada no banco.
+- Não execute novamente o schema legado. A página não exige criação de tabelas ou funções novas, desde que a função save_candidate_profile e as permissões já configuradas continuem no projeto.
+- O menu apresenta o atalho Meu perfil para contas candidate e Área da empresa para contas company.

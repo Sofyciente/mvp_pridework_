@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Defina uma nova senha para sua conta PrideWork.">
+  <title>Redefinir senha | PrideWork</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="apoio.css">
+</head>
+<body class="auth-body">
+  <header><nav class="navbar"><a href="index.html" class="logo">Pride<span>Work</span></a><div class="menu"><a href="index.html">Início</a><a href="login.html">Entrar</a></div></nav></header>
+  <main class="support-wrap">
+    <section class="auth-card" style="max-width:520px;margin:0 auto;">
+      <span class="support-kicker">SEGURANÇA DA CONTA</span>
+      <h1 style="font-size:30px;color:#1f2937;margin:12px 0;">Crie uma nova senha</h1>
+      <p style="color:#6b7280;">Use pelo menos 8 caracteres. Depois de salvar, entre novamente com sua nova senha.</p>
+      <p id="resetMessage" class="form-message" role="status" aria-live="polite"></p>
+      <form id="resetForm">
+        <div class="form-field"><label for="newPassword">Nova senha</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+        <div class="form-field"><label for="confirmPassword">Confirme a nova senha</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+        <button class="auth-submit" id="resetSubmit" type="submit">Salvar nova senha</button>
+      </form>
+      <p style="margin-top:18px;font-size:13px;"><a href="login.html">Voltar ao login</a></p>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="redefinir-senha.js"></script>
+</body>
+</html>

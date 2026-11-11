@@ -1,0 +1,9363 @@
+candidatura.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Candidatura - PrideWork</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section class="candidatura-container">
+
+            <a
+                href="javascript:history.back()"
+                class="voltar"
+            >
+                ← Voltar para a vaga
+            </a>
+
+            <div class="candidatura-card">
+
+                <div class="candidatura-titulo">
+
+                    <span class="tag">
+                        Candidatura
+                    </span>
+
+                    <h1>
+                        Candidate-se à vaga
+                    </h1>
+
+                    <p id="nomeVaga">
+                        Carregando vaga...
+                    </p>
+
+                </div>
+
+                <form id="formCandidatura">
+
+                    <div class="campo">
+
+                        <label for="nome">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            placeholder="Digite seu nome completo"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="seuemail@exemplo.com"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="telefone">
+                            Telefone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telefone"
+                            placeholder="(00) 00000-0000"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="curriculo">
+                            Currículo
+                        </label>
+
+                        <input
+                            type="file"
+                            id="curriculo"
+                            accept=".pdf,.doc,.docx"
+                            required
+                        >
+
+                        <small>
+                            Formatos aceitos: PDF, DOC ou DOCX.
+                        </small>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="mensagem">
+                            Carta de apresentação
+                        </label>
+
+                        <textarea
+                            id="mensagem"
+                            rows="7"
+                            placeholder="Conte brevemente por que você seria uma boa escolha para esta vaga..."
+                        ></textarea>
+
+                    </div>
+
+                    <div class="checkbox-candidatura">
+
+                        <input
+                            type="checkbox"
+                            id="consentimento"
+                            required
+                        >
+
+                        <label for="consentimento">
+                            Concordo que as informações fornecidas
+                            sejam utilizadas para esta candidatura.
+                        </label>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="botao-enviar-candidatura"
+                    >
+                        Enviar candidatura
+                    </button>
+
+                </form>
+
+                <div
+                    id="sucessoCandidatura"
+                    class="sucesso-candidatura"
+                    style="display: none;"
+                >
+
+                    <div class="icone-sucesso">
+                        ✓
+                    </div>
+
+                    <h2>
+                        Candidatura enviada!
+                    </h2>
+
+                    <p id="mensagemSucesso">
+                        Sua candidatura foi registrada com sucesso.
+                    </p>
+
+                    <a
+                        href="index.html#vagas"
+                        class="botao-voltar-vagas"
+                    >
+                        Voltar para vagas
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        let vagas = [];
+
+        let vagaAtual = null;
+
+        const parametros =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const id =
+            Number(
+                parametros.get("id")
+            );
+
+        fetch("vagas.json")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                vagas = data;
+
+                vagaAtual = vagas.find(
+                    vaga => vaga.id === id
+                );
+
+                if (!vagaAtual) {
+
+                    document.getElementById(
+                        "nomeVaga"
+                    ).textContent =
+                        "Vaga não encontrada.";
+
+                    return;
+
+                }
+
+                document.getElementById(
+                    "nomeVaga"
+                ).textContent =
+                    `${vagaAtual.titulo} - ${vagaAtual.empresa}`;
+
+                document.title =
+                    `Candidatura - ${vagaAtual.titulo} | PrideWork`;
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Erro ao carregar vaga:",
+                    error
+                );
+
+                document.getElementById(
+                    "nomeVaga"
+                ).textContent =
+                    "Não foi possível carregar os dados da vaga.";
+
+            });
+
+        document
+            .getElementById("formCandidatura")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    const nome =
+                        document.getElementById(
+                            "nome"
+                        ).value;
+
+                    document.getElementById(
+                        "formCandidatura"
+                    ).style.display = "none";
+
+                    document.getElementById(
+                        "sucessoCandidatura"
+                    ).style.display = "block";
+
+                    if (vagaAtual) {
+
+                        document.getElementById(
+                            "mensagemSucesso"
+                        ).textContent =
+                            `Obrigado, ${nome}! Sua candidatura para a vaga de ${vagaAtual.titulo} na ${vagaAtual.empresa} foi registrada com sucesso.`;
+
+                    } else {
+
+                        document.getElementById(
+                            "mensagemSucesso"
+                        ).textContent =
+                            `Obrigado, ${nome}! Sua candidatura foi registrada com sucesso.`;
+
+                    }
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>
+
+denunciar.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Denunciar empresa - PrideWork</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html" class="menu-ativo">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="denuncia-container">
+
+            <div class="denuncia-introducao">
+
+                <span class="tag">
+                    Segurança e transparência
+                </span>
+
+                <h1>
+                    Denuncie uma empresa
+                </h1>
+
+                <p>
+                    A PrideWork permite que trabalhadores e candidatos
+                    relatem possíveis situações de má conduta,
+                    contribuindo para um mercado de trabalho mais
+                    transparente e seguro.
+                </p>
+
+            </div>
+
+            <div class="aviso-denuncia">
+
+                <strong>
+                    Antes de enviar
+                </strong>
+
+                <p>
+                    Uma denúncia representa um relato e não significa
+                    que a empresa tenha cometido uma irregularidade.
+                    As informações poderão ser analisadas antes de
+                    qualquer publicação ou medida.
+                </p>
+
+            </div>
+
+            <div class="denuncia-card">
+
+                <form id="formDenuncia">
+
+                    <div class="campo">
+
+                        <label for="empresa">
+                            Empresa denunciada
+                        </label>
+
+                        <input
+                            type="text"
+                            id="empresa"
+                            placeholder="Digite o nome da empresa"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="categoria">
+                            Motivo da denúncia
+                        </label>
+
+                        <select id="categoria" required>
+
+                            <option value="">
+                                Selecione uma categoria
+                            </option>
+
+                            <option value="desrespeito">
+                                Desrespeito no ambiente de trabalho
+                            </option>
+
+                            <option value="direitos">
+                                Descumprimento de direitos trabalhistas
+                            </option>
+
+                            <option value="salario">
+                                Problemas relacionados a salário ou pagamento
+                            </option>
+
+                            <option value="assedio">
+                                Assédio ou discriminação
+                            </option>
+
+                            <option value="seguranca">
+                                Falta de segurança no trabalho
+                            </option>
+
+                            <option value="justica">
+                                Histórico ou problemas judiciais
+                            </option>
+
+                            <option value="outro">
+                                Outro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="descricao">
+                            Descreva o ocorrido
+                        </label>
+
+                        <textarea
+                            id="descricao"
+                            rows="8"
+                            placeholder="Explique com o máximo de detalhes possível o que aconteceu..."
+                            required
+                        ></textarea>
+
+                        <small>
+                            Evite inserir informações pessoais
+                            desnecessárias de outras pessoas.
+                        </small>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="data">
+                            Quando aconteceu?
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                        >
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="evidencia">
+                            Evidências
+                        </label>
+
+                        <input
+                            type="file"
+                            id="evidencia"
+                            accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+                        >
+
+                        <small>
+                            Você poderá anexar documentos ou imagens
+                            relacionados à denúncia.
+                        </small>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label>
+                            Deseja manter sua identidade privada?
+                        </label>
+
+                        <div class="opcoes-radio">
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="privacidade"
+                                    value="sim"
+                                    checked
+                                >
+
+                                Sim, manter minha identidade privada
+
+                            </label>
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="privacidade"
+                                    value="nao"
+                                >
+
+                                Não, posso ser identificado
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="checkbox-denuncia">
+
+                        <input
+                            type="checkbox"
+                            id="responsabilidade"
+                            required
+                        >
+
+                        <label for="responsabilidade">
+
+                            Confirmo que as informações fornecidas
+                            representam meu relato dos acontecimentos
+                            e que não estou utilizando a plataforma
+                            deliberadamente para fornecer informações
+                            falsas.
+
+                        </label>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="botao-enviar-denuncia"
+                    >
+                        Enviar denúncia
+                    </button>
+
+                </form>
+
+                <div
+                    id="sucessoDenuncia"
+                    class="sucesso-denuncia"
+                    style="display: none;"
+                >
+
+                    <div class="icone-sucesso">
+                        ✓
+                    </div>
+
+                    <h2>
+                        Denúncia registrada
+                    </h2>
+
+                    <p>
+                        Obrigado por contribuir com a transparência
+                        do mercado de trabalho.
+                    </p>
+
+                    <p>
+                        Sua denúncia será encaminhada para análise.
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="botao-voltar-vagas"
+                    >
+                        Voltar para a PrideWork
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        document
+            .getElementById("formDenuncia")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                document.getElementById(
+                    "formDenuncia"
+                ).style.display = "none";
+
+                document.getElementById(
+                    "sucessoDenuncia"
+                ).style.display = "block";
+
+            });
+
+    </script>
+
+</body>
+
+</html>
+
+empresa-perfil.css
+.company-page { width: min(1320px, 96%); margin: 28px auto 60px; }
+.company-layout { display:grid; grid-template-columns:minmax(0, 2.1fr) minmax(280px, .9fr); gap:24px; align-items:start; }
+.company-main { min-width:0; }
+.company-back { display:inline-block; margin:0 0 16px 4px; color:#4f46e5; text-decoration:none; font-weight:600; }
+.company-hero, .company-panel, .company-side-card { background:#fff; border:1px solid #dedfe3; border-radius:12px; overflow:hidden; }
+.company-hero { margin-bottom:16px; }
+.company-cover { height:190px; position:relative; overflow:hidden; background:linear-gradient(125deg,#172554,#4f46e5 60%,#a5b4fc); }
+.company-cover:before,.company-cover:after { content:""; position:absolute; border:1px solid rgba(255,255,255,.22); transform:rotate(-22deg); width:65%; height:180%; top:-45%; right:-8%; border-radius:30px; }
+.company-cover:after { width:42%; right:14%; top:-65%; }
+.cover-pattern { position:absolute; inset:0; background:linear-gradient(90deg,transparent 49%,rgba(255,255,255,.07) 50%,transparent 51%),linear-gradient(0deg,transparent 49%,rgba(255,255,255,.06) 50%,transparent 51%); background-size:42px 42px; }
+.theme-indigo { --company-color:#4f46e5; --company-light:#eef2ff; }
+.theme-blue { --company-color:#0369a1; --company-light:#e0f2fe; }
+.theme-violet { --company-color:#7c3aed; --company-light:#f3e8ff; }
+.theme-teal { --company-color:#0f766e; --company-light:#ccfbf1; }
+.theme-rose { --company-color:#be123c; --company-light:#ffe4e6; }
+.theme-amber { --company-color:#b45309; --company-light:#fef3c7; }
+.company-cover.theme-blue { background:linear-gradient(125deg,#082f49,#0284c7,#bae6fd); }
+.company-cover.theme-violet { background:linear-gradient(125deg,#3b0764,#7c3aed,#ddd6fe); }
+.company-cover.theme-teal { background:linear-gradient(125deg,#042f2e,#0f766e,#99f6e4); }
+.company-cover.theme-rose { background:linear-gradient(125deg,#4c0519,#be123c,#fecdd3); }
+.company-cover.theme-amber { background:linear-gradient(125deg,#451a03,#b45309,#fde68a); }
+.company-identity { position:relative; display:flex; align-items:center; gap:20px; padding:0 26px 26px; }
+.company-logo-large { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:112px; height:112px; margin-top:-54px; border:5px solid #fff; border-radius:8px; background:var(--company-color,#4f46e5); color:#fff; font-size:50px; font-weight:800; box-shadow:0 2px 8px #00000014; }
+.company-heading { flex:1; min-width:0; padding-top:16px; }
+.company-verified { color:#64748b; font-size:12px; font-weight:600; }
+.company-heading h1 { margin:5px 0 5px; font-size:clamp(24px,3vw,31px); color:#1f2937; }
+.company-check { display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:50%; color:#fff; background:#64748b; font-size:12px; vertical-align:middle; }
+.company-heading p { margin:0 0 8px; color:#374151; line-height:1.5; }
+.company-meta { color:#6b7280; font-size:13px; line-height:1.8; }
+.company-meta span { padding:0 4px; }
+.company-button,.company-outline-button { display:inline-flex; align-items:center; justify-content:center; padding:11px 18px; border-radius:24px; text-decoration:none; font-weight:700; white-space:nowrap; }
+.company-button { color:#fff; background:#4f46e5; border:1px solid #4f46e5; }
+.company-button:hover { background:#4338ca; }
+.company-follow-main { align-self:center; }
+.company-tabs { display:flex; gap:0; border-top:1px solid #e5e7eb; overflow-x:auto; }
+.company-tabs a { display:block; padding:17px 22px; color:#5b6472; text-decoration:none; font-weight:600; white-space:nowrap; border-bottom:3px solid transparent; }
+.company-tabs a:hover,.company-tabs a.active { color:#4f46e5; border-bottom-color:#4f46e5; }
+.company-panel { padding:27px; margin-bottom:16px; }
+.company-panel h2 { margin:0 0 16px; font-size:22px; color:#252b35; }
+.company-panel > p { color:#4b5563; line-height:1.75; }
+.company-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; padding:22px 0; margin-top:14px; border-top:1px solid #e5e7eb; border-bottom:1px solid #e5e7eb; }
+.company-facts div { display:flex; flex-direction:column; gap:5px; }
+.company-facts span { color:#6b7280; font-size:13px; }
+.company-facts strong { color:#374151; font-size:14px; font-weight:600; }
+.company-panel h3 { margin:22px 0 12px; font-size:16px; }
+.company-specialties { display:flex; flex-wrap:wrap; gap:8px; }
+.company-specialties span { padding:8px 12px; color:#4338ca; background:#eef2ff; border-radius:20px; font-size:13px; font-weight:600; }
+.company-disclaimer { padding-top:12px; color:#7c8492!important; font-size:12px; }
+.company-section-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+.company-section-heading h2 { margin-bottom:5px; }
+.company-section-heading p { margin:0; color:#6b7280; font-size:14px; }
+.company-job-count { flex-shrink:0; padding:8px 12px; border-radius:20px; background:#eef2ff; color:#4f46e5; font-size:13px; font-weight:700; }
+.company-jobs { display:grid; gap:0; }
+.company-job { display:flex; align-items:center; gap:16px; padding:20px 0; border-top:1px solid #e5e7eb; }
+.company-job:first-child { border-top:0; padding-top:0; }
+.company-job-icon { display:flex; align-items:center; justify-content:center; width:54px; height:54px; flex-shrink:0; border-radius:8px; color:#fff; background:var(--company-color,#4f46e5); font-size:25px; font-weight:800; }
+.company-job-info { flex:1; min-width:0; }
+.company-job-info a { color:#4f46e5; font-size:17px; font-weight:700; text-decoration:none; }
+.company-job-info a:hover { text-decoration:underline; }
+.company-job-info p { margin:5px 0; color:#6b7280; font-size:13px; line-height:1.5; }
+.company-job-info strong { color:#374151; font-size:13px; }
+.company-job-link { color:#4f46e5; text-decoration:none; font-weight:700; white-space:nowrap; }
+.company-community { background:#fafaff; }
+.company-community-note { padding:17px; margin:18px 0; border:1px solid #e0e7ff; background:#fff; border-radius:10px; }
+.company-community-note strong { color:#374151; }
+.company-community-note p { margin:8px 0 0; color:#6b7280; font-size:14px; line-height:1.65; }
+.company-outline-button { color:#4f46e5; border:1px solid #4f46e5; background:#fff; }
+.company-outline-button:hover { background:#eef2ff; }
+.company-aside { display:grid; gap:16px; }
+.company-side-card { padding:20px 18px 0; }
+.company-side-card h2 { margin:0 0 14px; color:#292f38; font-size:18px; line-height:1.35; }
+.company-mini { display:flex; gap:13px; padding:15px 0; border-top:1px solid #e5e7eb; }
+.company-mini-logo { display:flex; align-items:center; justify-content:center; width:48px; height:48px; flex-shrink:0; color:#fff; background:var(--company-color,#4f46e5); border-radius:5px; font-size:23px; font-weight:800; text-decoration:none; }
+.company-mini-info { min-width:0; }
+.company-mini-name { color:#252b35; font-weight:700; font-size:14px; line-height:1.4; text-decoration:none; }
+.company-mini-name:hover { color:#4f46e5; text-decoration:underline; }
+.company-mini-info p { margin:4px 0; color:#5b6472; font-size:12px; line-height:1.45; }
+.company-mini-info small { color:#7b8491; font-size:11px; }
+.company-follow { display:table; margin-top:10px; padding:5px 11px; border:1px solid #9ca3af; border-radius:18px; color:#4b5563; font-size:12px; font-weight:600; text-decoration:none; }
+.company-follow:hover { background:#f3f4f6; }
+.company-see-all { display:block; margin:0 -18px; padding:17px; border-top:1px solid #e5e7eb; color:#4b5563; text-align:center; text-decoration:none; font-weight:600; }
+.company-see-all:hover { background:#f9fafb; }
+.company-loading,.company-error { padding:40px; background:#fff; border:1px solid #e5e7eb; border-radius:12px; }
+.company-error { text-align:center; }
+.company-error p { color:#6b7280; line-height:1.6; margin-bottom:22px; }
+.company-empty { color:#6b7280; }
+@media(max-width:950px) { .company-layout { grid-template-columns:1fr; } .company-aside { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:650px) {
+ .company-page { width:94%; margin-top:18px; }
+ .company-cover { height:135px; }
+ .company-identity { flex-wrap:wrap; padding:0 18px 22px; gap:12px; }
+ .company-logo-large { width:82px; height:82px; margin-top:-40px; font-size:37px; }
+ .company-heading { flex-basis:calc(100% - 100px); padding-top:10px; }
+ .company-follow-main { margin-left:0; }
+ .company-tabs a { padding:14px 17px; font-size:14px; }
+ .company-panel { padding:22px 18px; }
+ .company-facts { grid-template-columns:1fr 1fr; gap:15px; }
+ .company-job { align-items:flex-start; flex-wrap:wrap; }
+ .company-job-link { margin-left:70px; }
+ .company-aside { grid-template-columns:1fr; }
+ .company-section-heading { align-items:flex-start; flex-direction:column; }
+}
+
+
+empresa.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil da empresa | PrideWork</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="empresa-perfil.css">
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <a href="index.html" class="logo">Pride<span>Work</span></a>
+        <div class="menu">
+            <a href="index.html#vagas">Vagas de emprego</a>
+            <a href="denunciar.html">Denunciar</a>
+            <a href="fórum.html">Fórum</a>
+            <a href="feedback.html">Feedback</a>
+        </div>
+    </nav>
+</header>
+<main class="company-page">
+    <div class="company-layout">
+        <div class="company-main">
+            <a class="company-back" href="javascript:history.back()">← Voltar</a>
+            <div id="companyProfile"><div class="company-loading">Carregando perfil...</div></div>
+        </div>
+        <aside class="company-aside">
+            <section class="company-side-card">
+                <h2>Páginas que as pessoas também viram</h2>
+                <div id="similarCompanies"></div>
+                <a class="company-see-all" href="index.html#vagas">Explorar empresas →</a>
+            </section>
+            <section class="company-side-card">
+                <h2>As pessoas também seguem</h2>
+                <div id="followedCompanies"></div>
+            </section>
+        </aside>
+    </div>
+</main>
+<footer>
+    <div class="footer-content">
+        <strong>PrideWork</strong>
+        <p>© 2026 PrideWork. MVP acadêmico.</p>
+    </div>
+</footer>
+<script>
+const companies = [{"nome": "NovaCorp", "area": "Serviços corporativos e operações", "slogan": "Organizando processos para empresas crescerem melhor.", "sobre": "A NovaCorp é uma empresa fictícia de serviços corporativos que apoia organizações em rotinas administrativas, gestão de documentos e melhoria de processos. Seu trabalho combina organização operacional, atendimento interno e padronização de atividades para que as equipes possam focar em suas prioridades.", "sede": "São Paulo, SP", "fundacao": "2016", "porte": "201-500 funcionários", "especialidades": ["Operações administrativas", "Gestão de processos", "Serviços corporativos"], "seguidores": "12.480", "theme": "theme-indigo"}, {"nome": "DataVision", "area": "Tecnologia, dados e inteligência de negócios", "slogan": "Transformando dados em decisões mais claras.", "sobre": "A DataVision é uma empresa fictícia de tecnologia que desenvolve soluções de análise de dados e inteligência de negócios. Atua com painéis gerenciais, indicadores, integração de bases e automação de relatórios para apoiar decisões em diferentes áreas.", "sede": "São Paulo, SP", "fundacao": "2018", "porte": "51-200 funcionários", "especialidades": ["Análise de dados", "Business Intelligence", "SQL e automação"], "seguidores": "8.730", "theme": "theme-blue"}, {"nome": "PeopleFirst", "area": "Recursos Humanos e desenvolvimento de pessoas", "slogan": "Pessoas no centro de cada oportunidade.", "sobre": "A PeopleFirst é uma consultoria fictícia de recursos humanos que apoia empresas em recrutamento, seleção, integração e desenvolvimento de talentos. A companhia trabalha para tornar os processos de contratação mais organizados e melhorar a experiência de candidatos e equipes.", "sede": "Sorocaba, SP", "fundacao": "2017", "porte": "51-200 funcionários", "especialidades": ["Recrutamento e seleção", "Treinamento", "Gestão de pessoas"], "seguidores": "6.920", "theme": "theme-violet"}, {"nome": "Vértice Engenharia", "area": "Engenharia e construção", "slogan": "Projetos sólidos, soluções duradouras.", "sobre": "A Vértice Engenharia é uma empresa fictícia de projetos e obras que atende clientes comerciais e industriais. Reúne equipes de planejamento, orçamento, acompanhamento de obras e segurança para conduzir projetos do estudo inicial à entrega.", "sede": "Campinas, SP", "fundacao": "2012", "porte": "201-500 funcionários", "especialidades": ["Planejamento de obras", "Orçamentos", "Gestão de projetos"], "seguidores": "9.140", "theme": "theme-teal"}, {"nome": "Aurora Saúde", "area": "Saúde e serviços clínicos", "slogan": "Cuidado próximo, gestão responsável.", "sobre": "A Aurora Saúde é uma rede fictícia de clínicas e serviços ambulatoriais. Sua operação integra atendimento ao público, equipes clínicas, gestão de agendas e áreas administrativas para oferecer uma experiência acolhedora e organizada.", "sede": "São Paulo, SP", "fundacao": "2015", "porte": "201-500 funcionários", "especialidades": ["Atendimento ao paciente", "Operações clínicas", "Gestão de saúde"], "seguidores": "14.600", "theme": "theme-rose"}, {"nome": "NexoLog", "area": "Logística e cadeia de suprimentos", "slogan": "Conectando estoques, rotas e pessoas.", "sobre": "A NexoLog é uma operadora logística fictícia especializada em armazenagem, distribuição e acompanhamento de entregas. Utiliza indicadores operacionais e planejamento de rotas para apoiar clientes de varejo e indústria.", "sede": "Guarulhos, SP", "fundacao": "2014", "porte": "501-1.000 funcionários", "especialidades": ["Logística", "Controle de estoque", "Distribuição"], "seguidores": "11.250", "theme": "theme-amber"}, {"nome": "VerdeVivo Sustentabilidade", "area": "Meio ambiente e sustentabilidade", "slogan": "Soluções práticas para um futuro mais sustentável.", "sobre": "A VerdeVivo é uma consultoria fictícia que auxilia empresas em projetos de sustentabilidade, gestão de resíduos, educação ambiental e acompanhamento de indicadores socioambientais.", "sede": "Curitiba, PR", "fundacao": "2019", "porte": "11-50 funcionários", "especialidades": ["Gestão ambiental", "Relatórios ESG", "Educação ambiental"], "seguidores": "4.380", "theme": "theme-indigo"}, {"nome": "PontoCerto Contábil", "area": "Contabilidade e consultoria financeira", "slogan": "Clareza financeira para decisões seguras.", "sobre": "A PontoCerto Contábil é um escritório fictício que oferece serviços contábeis, fiscais e de apoio financeiro para pequenas e médias empresas. A equipe trabalha com organização documental, fechamento contábil e orientação sobre rotinas empresariais.", "sede": "Santo André, SP", "fundacao": "2011", "porte": "11-50 funcionários", "especialidades": ["Contabilidade", "Fiscal e tributário", "BPO financeiro"], "seguidores": "3.960", "theme": "theme-blue"}, {"nome": "Conecta Telecom", "area": "Telecomunicações e atendimento", "slogan": "Conexões confiáveis para o dia a dia.", "sobre": "A Conecta Telecom é uma empresa fictícia de serviços de conectividade para clientes residenciais e empresariais. Atua com suporte técnico, relacionamento com clientes, instalação e acompanhamento de qualidade.", "sede": "São Bernardo do Campo, SP", "fundacao": "2013", "porte": "201-500 funcionários", "especialidades": ["Telecomunicações", "Suporte técnico", "Experiência do cliente"], "seguidores": "7.510", "theme": "theme-violet"}, {"nome": "Lumina Design", "area": "Design, comunicação e marketing", "slogan": "Marcas com propósito e experiências memoráveis.", "sobre": "A Lumina Design é um estúdio fictício de comunicação que desenvolve identidades visuais, campanhas digitais e materiais para marcas. Trabalha em parceria com clientes para transformar objetivos de negócio em soluções criativas.", "sede": "São Paulo, SP", "fundacao": "2020", "porte": "11-50 funcionários", "especialidades": ["Design gráfico", "Marketing digital", "Identidade de marca"], "seguidores": "5.270", "theme": "theme-teal"}, {"nome": "Atlas Educação", "area": "Educação e tecnologia educacional", "slogan": "Aprender abre novos caminhos.", "sobre": "A Atlas Educação é uma organização fictícia que desenvolve cursos, materiais didáticos e soluções de aprendizagem para estudantes e empresas. Sua equipe reúne profissionais de conteúdo, tecnologia e apoio acadêmico.", "sede": "Ribeirão Preto, SP", "fundacao": "2016", "porte": "51-200 funcionários", "especialidades": ["Educação corporativa", "Conteúdo didático", "Tecnologia educacional"], "seguidores": "6.140", "theme": "theme-rose"}, {"nome": "Orbe Financeira", "area": "Serviços financeiros e planejamento", "slogan": "Mais organização para a vida financeira.", "sobre": "A Orbe Financeira é uma empresa fictícia de serviços de planejamento e apoio financeiro. Desenvolve análises, relatórios e processos de atendimento para pessoas e pequenos negócios, com foco em clareza e organização.", "sede": "São Paulo, SP", "fundacao": "2018", "porte": "51-200 funcionários", "especialidades": ["Planejamento financeiro", "Análise de crédito", "Relacionamento"], "seguidores": "8.020", "theme": "theme-amber"}, {"nome": "CampoNobre Alimentos", "area": "Agronegócio e indústria alimentícia", "slogan": "Da origem à mesa, com cuidado em cada etapa.", "sobre": "A CampoNobre é uma empresa fictícia do setor de alimentos que coordena atividades de produção, qualidade, armazenagem e distribuição. Suas equipes acompanham padrões operacionais e processos de melhoria contínua.", "sede": "Ribeirão Preto, SP", "fundacao": "2009", "porte": "501-1.000 funcionários", "especialidades": ["Qualidade de alimentos", "Produção", "Cadeia de suprimentos"], "seguidores": "10.870", "theme": "theme-indigo"}, {"nome": "Prisma Jurídico", "area": "Serviços jurídicos empresariais", "slogan": "Orientação jurídica próxima e objetiva.", "sobre": "O Prisma Jurídico é um escritório fictício que presta apoio jurídico a empresas em contratos, organização documental e acompanhamento de demandas. O perfil institucional é demonstrativo e não representa um escritório real.", "sede": "São Paulo, SP", "fundacao": "2014", "porte": "11-50 funcionários", "especialidades": ["Contratos", "Direito empresarial", "Pesquisa jurídica"], "seguidores": "4.710", "theme": "theme-blue"}, {"nome": "RotaSul Transportes", "area": "Transporte e mobilidade", "slogan": "Movimentando pessoas e negócios com planejamento.", "sobre": "A RotaSul é uma transportadora fictícia que opera serviços de transporte e distribuição regional. A empresa reúne equipes de tráfego, atendimento, manutenção e planejamento para acompanhar a operação diária.", "sede": "Joinville, SC", "fundacao": "2010", "porte": "201-500 funcionários", "especialidades": ["Gestão de frota", "Planejamento de rotas", "Operações"], "seguidores": "7.890", "theme": "theme-violet"}, {"nome": "Mosaico Varejo", "area": "Comércio e varejo", "slogan": "Experiências de compra simples e humanas.", "sobre": "A Mosaico Varejo é uma rede fictícia de lojas de utilidades e produtos para o dia a dia. Atua em operações de loja, atendimento, compras, estoque e canais digitais, buscando integrar a experiência presencial e online.", "sede": "Osasco, SP", "fundacao": "2017", "porte": "501-1.000 funcionários", "especialidades": ["Operações de loja", "Vendas", "Gestão de estoque"], "seguidores": "13.300", "theme": "theme-teal"}, {"nome": "ByteForge Sistemas", "area": "Desenvolvimento de software", "slogan": "Software útil, equipes colaborativas.", "sobre": "A ByteForge Sistemas é uma empresa fictícia de desenvolvimento de software que cria aplicações web e ferramentas internas para clientes de diferentes setores. Trabalha com ciclos curtos de entrega, documentação e colaboração entre áreas técnicas e de produto.", "sede": "Florianópolis, SC", "fundacao": "2021", "porte": "51-200 funcionários", "especialidades": ["Desenvolvimento web", "Qualidade de software", "Produto digital"], "seguidores": "6.780", "theme": "theme-rose"}, {"nome": "Horizonte Energia", "area": "Energia e infraestrutura", "slogan": "Energia para projetos que movem o futuro.", "sobre": "A Horizonte Energia é uma empresa fictícia de serviços e projetos ligados à eficiência energética. Suas equipes apoiam estudos técnicos, acompanhamento de indicadores e iniciativas de melhoria em instalações comerciais.", "sede": "Belo Horizonte, MG", "fundacao": "2016", "porte": "51-200 funcionários", "especialidades": ["Eficiência energética", "Projetos", "Análise técnica"], "seguidores": "5.940", "theme": "theme-amber"}];
+const params = new URLSearchParams(window.location.search);
+const requestedName = params.get("nome");
+const profileRoot = document.getElementById("companyProfile");
+const similarRoot = document.getElementById("similarCompanies");
+const followedRoot = document.getElementById("followedCompanies");
+
+function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[char]);
+}
+function slug(value) {
+    return value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+}
+function companyLink(company) {
+    return "empresa.html?nome=" + encodeURIComponent(company.nome);
+}
+function miniCard(company, label) {
+    return `<article class="company-mini">
+        <a class="company-mini-logo ${company.theme || ""}" href="${companyLink(company)}">${esc(company.nome.slice(0,1))}</a>
+        <div class="company-mini-info">
+            <a class="company-mini-name" href="${companyLink(company)}">${esc(company.nome)}</a>
+            <p>${esc(company.area)}</p>
+            <small>${esc(company.seguidores)} seguidores</small>
+            <a class="company-follow" href="${companyLink(company)}">＋ Ver perfil</a>
+        </div>
+    </article>`;
+}
+function renderError(title, message) {
+    profileRoot.innerHTML = `<section class="company-error"><h1>${esc(title)}</h1><p>${esc(message)}</p><a class="company-button" href="index.html#vagas">Ver vagas</a></section>`;
+}
+if (!requestedName) {
+    renderError("Empresa não informada","Volte às vagas e selecione o perfil de uma empresa.");
+} else {
+    Promise.all([
+        fetch("vagas.json").then(response => {
+            if (!response.ok) throw new Error();
+            return response.json();
+        })
+    ]).then(([vacancies]) => {
+        const company = companies.find(item => slug(item.nome) === slug(requestedName));
+        if (!company) {
+            renderError("Perfil não encontrado","Não encontramos essa empresa no cadastro do PrideWork.");
+            return;
+        }
+        const companyJobs = vacancies.filter(job => slug(job.empresa) === slug(company.nome));
+        const related = companies.filter(item => item.nome !== company.nome && item.area === company.area);
+        const recommendations = [...related, ...companies.filter(item => item.nome !== company.nome && !related.includes(item))];
+        document.title = `${company.nome} | PrideWork`;
+        profileRoot.innerHTML = `
+            <section class="company-hero">
+                <div class="company-cover ${company.theme || ""}">
+                    <span class="cover-pattern"></span>
+                </div>
+                <div class="company-identity">
+                    <div class="company-logo-large ${company.theme || ""}">${esc(company.nome.slice(0,1))}</div>
+                    <div class="company-heading">
+                        <span class="company-verified">Perfil institucional · Empresa fictícia</span>
+                        <h1>${esc(company.nome)} <span class="company-check">✓</span></h1>
+                        <p>${esc(company.slogan)}</p>
+                        <div class="company-meta">${esc(company.area)} <span>·</span> ${esc(company.sede)}</div>
+                        <div class="company-meta">${esc(company.porte)} <span>·</span> ${esc(company.seguidores)} seguidores</div>
+                    </div>
+                    <a class="company-button company-follow-main" href="#companyJobs">＋ Ver vagas</a>
+                </div>
+                <nav class="company-tabs">
+                    <a class="active" href="#overview">Início</a>
+                    <a href="#overview">Sobre</a>
+                    <a href="#companyJobs">Vagas</a>
+                    <a href="#companyCommunity">Comunidade</a>
+                </nav>
+            </section>
+            <section class="company-panel" id="overview">
+                <h2>Visão geral</h2>
+                <p>${esc(company.sobre)}</p>
+                <div class="company-facts">
+                    <div><span>Setor</span><strong>${esc(company.area)}</strong></div>
+                    <div><span>Sede</span><strong>${esc(company.sede)}</strong></div>
+                    <div><span>Fundação</span><strong>${esc(company.fundacao)}</strong></div>
+                    <div><span>Porte</span><strong>${esc(company.porte)}</strong></div>
+                </div>
+                <h3>Especialidades</h3>
+                <div class="company-specialties">${company.especialidades.map(item => `<span>${esc(item)}</span>`).join("")}</div>
+                <p class="company-disclaimer">Perfil e informações criados para demonstração acadêmica do PrideWork. Esta empresa não representa uma organização real.</p>
+            </section>
+            <section class="company-panel" id="companyJobs">
+                <div class="company-section-heading"><div><h2>Vagas em destaque</h2><p>Oportunidades cadastradas para esta empresa.</p></div><span class="company-job-count">${companyJobs.length} ${companyJobs.length === 1 ? "vaga" : "vagas"}</span></div>
+                ${companyJobs.length ? `<div class="company-jobs">${companyJobs.map(job => `
+                    <article class="company-job">
+                        <div class="company-job-icon">${esc(company.nome.slice(0,1))}</div>
+                        <div class="company-job-info">
+                            <a href="vaga.html?id=${encodeURIComponent(job.id)}">${esc(job.titulo)}</a>
+                            <p>${esc(company.nome)} · ${esc(job.localizacao)}</p>
+                            <p>${esc(job.modalidade)} · ${esc(job.nivel)} · ${esc(job.tipo)}</p>
+                            <strong>${esc(job.salario)}</strong>
+                        </div>
+                        <a class="company-job-link" href="vaga.html?id=${encodeURIComponent(job.id)}">Ver vaga →</a>
+                    </article>`).join("")}</div>` : `<p class="company-empty">Ainda não há vagas cadastradas para esta empresa.</p>`}
+            </section>
+            <section class="company-panel company-community" id="companyCommunity">
+                <h2>Transparência e comunidade</h2>
+                <p>Esta área foi pensada para reunir informações, avaliações e relatos da comunidade sobre experiências profissionais.</p>
+                <div class="company-community-note"><strong>Sobre os relatos</strong><p>Denúncias são relatos de usuários e não comprovam, por si só, que uma irregularidade ocorreu. No MVP, não há denúncias ou avaliações reais atribuídas a esta empresa.</p></div>
+                <a class="company-outline-button" href="denunciar.html">Relatar uma experiência</a>
+            </section>`;
+        similarRoot.innerHTML = recommendations.slice(0,4).map(item => miniCard(item)).join("");
+        followedRoot.innerHTML = recommendations.slice(4,7).map(item => miniCard(item)).join("");
+    }).catch(() => renderError("Não foi possível carregar o perfil","Confira se vagas.json está na mesma pasta e se o site está aberto pelo Live Server."));
+}
+</script>
+</body>
+</html>
+
+feedback.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PrideWork - Feedback</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <main class="feedback-page">
+
+
+        <section class="feedback-hero">
+
+            <div class="feedback-hero-content">
+
+                <span class="feedback-tag">
+                    Sua opinião importa
+                </span>
+
+                <h1>
+                    Ajude a melhorar o PrideWork.
+                </h1>
+
+                <p>
+                    O PrideWork está em desenvolvimento e sua
+                    opinião pode ajudar a tornar a plataforma
+                    mais útil, segura e fácil de usar.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="container feedback-container">
+
+            <div class="feedback-grid">
+
+
+                <div class="feedback-form-card">
+
+                    <h2>
+                        Envie seu feedback
+                    </h2>
+
+                    <p class="feedback-subtitle">
+                        Conte-nos como foi sua experiência.
+                    </p>
+
+
+                    <form id="feedbackForm">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Como você avalia o PrideWork?
+                            </label>
+
+                            <div class="avaliacao-opcoes">
+
+
+                                <label class="avaliacao-option">
+
+                                    <input
+                                        type="radio"
+                                        name="avaliacao"
+                                        value="1/5"
+                                        required
+                                    >
+
+                                    <span>
+                                        Muito ruim
+                                    </span>
+
+                                </label>
+
+
+                                <label class="avaliacao-option">
+
+                                    <input
+                                        type="radio"
+                                        name="avaliacao"
+                                        value="2/5"
+                                    >
+
+                                    <span>
+                                        Ruim
+                                    </span>
+
+                                </label>
+
+
+                                <label class="avaliacao-option">
+
+                                    <input
+                                        type="radio"
+                                        name="avaliacao"
+                                        value="3/5"
+                                    >
+
+                                    <span>
+                                        Regular
+                                    </span>
+
+                                </label>
+
+
+                                <label class="avaliacao-option">
+
+                                    <input
+                                        type="radio"
+                                        name="avaliacao"
+                                        value="4/5"
+                                    >
+
+                                    <span>
+                                        Bom
+                                    </span>
+
+                                </label>
+
+
+                                <label class="avaliacao-option">
+
+                                    <input
+                                        type="radio"
+                                        name="avaliacao"
+                                        value="5/5"
+                                    >
+
+                                    <span>
+                                        Excelente
+                                    </span>
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="categoriaFeedback">
+                                Sobre o que é seu feedback?
+                            </label>
+
+                            <select
+                                id="categoriaFeedback"
+                                required
+                            >
+
+                                <option value="">
+                                    Selecione uma categoria
+                                </option>
+
+                                <option value="Busca de vagas">
+                                    Busca de vagas
+                                </option>
+
+                                <option value="Candidatura">
+                                    Candidatura
+                                </option>
+
+                                <option value="Denúncias">
+                                    Denúncias
+                                </option>
+
+                                <option value="Informações sobre empresas">
+                                    Informações sobre empresas
+                                </option>
+
+                                <option value="Navegação">
+                                    Navegação
+                                </option>
+
+                                <option value="Visual do site">
+                                    Visual do site
+                                </option>
+
+                                <option value="Outro">
+                                    Outro
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="mensagemFeedback">
+                                Seu feedback
+                            </label>
+
+                            <textarea
+                                id="mensagemFeedback"
+                                placeholder="Conte-nos o que podemos melhorar..."
+                                maxlength="500"
+                                required
+                            ></textarea>
+
+                            <small>
+                                Máximo de 500 caracteres.
+                            </small>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="feedback-button"
+                        >
+                            Enviar feedback
+                        </button>
+
+
+                        <div
+                            id="feedbackSucesso"
+                            class="feedback-sucesso"
+                        >
+
+                            <strong>
+                                Obrigado pelo seu feedback!
+                            </strong>
+
+                            <p>
+                                Sua opinião foi registrada com sucesso.
+                            </p>
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+
+                <div class="feedback-info-card">
+
+                    <span class="feedback-card-tag">
+                        Construindo juntos
+                    </span>
+
+                    <h2>
+                        O PrideWork evolui com você.
+                    </h2>
+
+                    <p>
+                        As opiniões dos usuários ajudam a identificar
+                        melhorias e novos recursos para a plataforma.
+                    </p>
+
+
+                    <div class="feedback-prioridade">
+
+
+                        <div>
+
+                            <strong>
+                                Filtros de vagas
+                            </strong>
+
+                            <span>
+                                82%
+                            </span>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <span style="width: 82%;"></span>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Avaliação de empresas
+                            </strong>
+
+                            <span>
+                                71%
+                            </span>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <span style="width: 71%;"></span>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Notificações de vagas
+                            </strong>
+
+                            <span>
+                                56%
+                            </span>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <span style="width: 56%;"></span>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Perfil profissional
+                            </strong>
+
+                            <span>
+                                43%
+                            </span>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <span style="width: 43%;"></span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <p class="dados-ficticios">
+                        Dados fictícios para demonstração do MVP.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <section class="container feedbacks-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Feedbacks da comunidade
+                    </h2>
+
+                    <p>
+                        Veja algumas opiniões e sugestões
+                        registradas no PrideWork.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="feedbackCards"
+                class="feedback-cards"
+            >
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        const feedbackForm =
+            document.getElementById("feedbackForm");
+
+        const feedbackSucesso =
+            document.getElementById("feedbackSucesso");
+
+        const feedbackCards =
+            document.getElementById("feedbackCards");
+
+        const CHAVE_FEEDBACKS =
+            "pridework_feedbacks";
+
+
+        const feedbacksIniciais = [
+
+            {
+                avaliacao: "5/5",
+                categoria: "Busca de vagas",
+                mensagem:
+                    "Seria interessante poder filtrar as vagas por modalidade, como presencial, híbrido e remoto.",
+                data: "20/08/2026"
+            },
+
+            {
+                avaliacao: "5/5",
+                categoria: "Informações sobre empresas",
+                mensagem:
+                    "Gostaria de conseguir visualizar informações sobre a empresa antes de me candidatar.",
+                data: "19/08/2026"
+            },
+
+            {
+                avaliacao: "4/5",
+                categoria: "Candidatura",
+                mensagem:
+                    "A página de candidatura poderia mostrar quais documentos são necessários antes de começar.",
+                data: "18/08/2026"
+            },
+
+            {
+                avaliacao: "5/5",
+                categoria: "Visual do site",
+                mensagem:
+                    'O botão "Ver vaga" poderia levar para uma página com mais informações sobre a oportunidade.',
+                data: "17/08/2026"
+            }
+
+        ];
+
+
+        function carregarFeedbacks() {
+
+            const dados =
+                localStorage.getItem(CHAVE_FEEDBACKS);
+
+            if (!dados) {
+
+                localStorage.setItem(
+                    CHAVE_FEEDBACKS,
+                    JSON.stringify(feedbacksIniciais)
+                );
+
+                return feedbacksIniciais;
+
+            }
+
+            try {
+
+                return JSON.parse(dados);
+
+            } catch (erro) {
+
+                localStorage.setItem(
+                    CHAVE_FEEDBACKS,
+                    JSON.stringify(feedbacksIniciais)
+                );
+
+                return feedbacksIniciais;
+
+            }
+
+        }
+
+
+        function salvarFeedback(feedback) {
+
+            const feedbacks =
+                carregarFeedbacks();
+
+            feedbacks.push(feedback);
+
+            localStorage.setItem(
+                CHAVE_FEEDBACKS,
+                JSON.stringify(feedbacks)
+            );
+
+        }
+
+
+        function criarCardFeedback(feedback) {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "feedback-card";
+
+
+            const topo =
+                document.createElement("div");
+
+            topo.className =
+                "feedback-card-top";
+
+
+            const categoria =
+                document.createElement("span");
+
+            categoria.textContent =
+                feedback.categoria;
+
+
+            const avaliacao =
+                document.createElement("strong");
+
+            avaliacao.textContent =
+                feedback.avaliacao;
+
+
+            topo.appendChild(categoria);
+            topo.appendChild(avaliacao);
+
+
+            const mensagem =
+                document.createElement("p");
+
+            mensagem.textContent =
+                feedback.mensagem;
+
+
+            const data =
+                document.createElement("small");
+
+            data.textContent =
+                "Usuário do PrideWork - " +
+                feedback.data;
+
+
+            card.appendChild(topo);
+            card.appendChild(mensagem);
+            card.appendChild(data);
+
+
+            return card;
+
+        }
+
+
+        function exibirFeedbacks() {
+
+            const feedbacks =
+                carregarFeedbacks();
+
+
+            feedbackCards.innerHTML = "";
+
+
+            feedbacks
+                .slice()
+                .reverse()
+                .forEach(
+                    function(feedback) {
+
+                        const card =
+                            criarCardFeedback(feedback);
+
+                        feedbackCards.appendChild(card);
+
+                    }
+                );
+
+        }
+
+
+        feedbackForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const avaliacao =
+                    document.querySelector(
+                        'input[name="avaliacao"]:checked'
+                    );
+
+
+                const categoria =
+                    document.getElementById(
+                        "categoriaFeedback"
+                    ).value;
+
+
+                const mensagem =
+                    document.getElementById(
+                        "mensagemFeedback"
+                    ).value.trim();
+
+
+                if (
+                    !avaliacao ||
+                    !categoria ||
+                    !mensagem
+                ) {
+
+                    return;
+
+                }
+
+
+                const dataAtual =
+                    new Date();
+
+
+                const data =
+                    dataAtual.toLocaleDateString(
+                        "pt-BR"
+                    );
+
+
+                const novoFeedback = {
+
+                    avaliacao:
+                        avaliacao.value,
+
+                    categoria:
+                        categoria,
+
+                    mensagem:
+                        mensagem,
+
+                    data:
+                        data
+
+                };
+
+
+                salvarFeedback(
+                    novoFeedback
+                );
+
+
+                feedbackForm.reset();
+
+
+                exibirFeedbacks();
+
+
+                feedbackSucesso.style.display =
+                    "block";
+
+
+                setTimeout(
+                    function() {
+
+                        feedbackSucesso.style.display =
+                            "none";
+
+                    },
+                    5000
+                );
+
+            }
+        );
+
+
+        exibirFeedbacks();
+
+    </script>
+
+</body>
+
+</html>
+
+forum.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PrideWork - Fórum</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="forum-page">
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="forum.html" class="menu-ativo">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section class="forum-hero">
+
+            <div class="forum-hero-content">
+
+                <span class="forum-tag">
+                    Comunidade PrideWork
+                </span>
+
+                <h1>
+                    Fórum PrideWork
+                </h1>
+
+                <p>
+                    Compartilhe experiências, tire dúvidas e
+                    converse sobre carreira, empresas e mercado
+                    de trabalho com outros profissionais.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="forum-container">
+
+            <div class="forum-topo">
+
+                <div>
+
+                    <h2>
+                        Discussões da comunidade
+                    </h2>
+
+                    <p>
+                        Encontre conversas que podem ajudar
+                        na sua jornada profissional.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="forum-botao-principal"
+                    id="abrirModal"
+                >
+                    Criar discussão
+                </button>
+
+            </div>
+
+            <div class="forum-ferramentas">
+
+                <div class="forum-pesquisa">
+
+                    <input
+                        type="text"
+                        id="campoPesquisaForum"
+                        placeholder="Pesquisar discussões..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <div class="forum-filtros">
+
+                    <button
+                        type="button"
+                        class="filtro ativo"
+                        data-categoria="Todas"
+                    >
+                        Todas
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filtro"
+                        data-categoria="Carreira"
+                    >
+                        Carreira
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filtro"
+                        data-categoria="Empresas"
+                    >
+                        Empresas
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filtro"
+                        data-categoria="Vagas"
+                    >
+                        Vagas
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filtro"
+                        data-categoria="Dicas"
+                    >
+                        Dicas
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="forum-layout">
+
+                <section class="forum-discussion-list">
+
+                    <div
+                        id="listaDiscussões"
+                        class="discussoes"
+                    ></div>
+
+                    <div
+                        id="forumVazio"
+                        class="forum-vazio"
+                    >
+
+                        <div class="forum-vazio-icone">
+                            ?
+                        </div>
+
+                        <h3>
+                            Nenhuma discussão encontrada
+                        </h3>
+
+                        <p>
+                            Tente pesquisar outro assunto ou
+                            crie uma nova discussão.
+                        </p>
+
+                    </div>
+
+                </section>
+
+                <aside class="forum-sidebar">
+
+                    <div class="forum-sidebar-card">
+
+                        <span class="forum-card-tag">
+                            Sobre o Fórum
+                        </span>
+
+                        <h3>
+                            Um espaço para profissionais
+                        </h3>
+
+                        <p>
+                            Converse sobre experiências
+                            profissionais, processos seletivos,
+                            empresas e desenvolvimento de carreira.
+                        </p>
+
+                    </div>
+
+                    <div class="forum-sidebar-card">
+
+                        <h3>
+                            Categorias
+                        </h3>
+
+                        <div class="categoria-lista">
+
+                            <button
+                                type="button"
+                                data-categoria="Carreira"
+                            >
+                                <span>Carreira</span>
+                                <strong id="contadorCarreira">0</strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                data-categoria="Empresas"
+                            >
+                                <span>Empresas</span>
+                                <strong id="contadorEmpresas">0</strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                data-categoria="Vagas"
+                            >
+                                <span>Vagas</span>
+                                <strong id="contadorVagas">0</strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                data-categoria="Dicas"
+                            >
+                                <span>Dicas</span>
+                                <strong id="contadorDicas">0</strong>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="forum-sidebar-card forum-ajuda-card">
+
+                        <span class="forum-card-tag">
+                            Comunidade
+                        </span>
+
+                        <h3>
+                            Respeito em primeiro lugar
+                        </h3>
+
+                        <p>
+                            O Fórum deve ser um espaço seguro,
+                            respeitoso e construtivo para todos.
+                        </p>
+
+                        <a href="#">
+                            Ver regras da comunidade
+                        </a>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div
+        id="modalDiscussao"
+        class="modal-overlay"
+    >
+
+        <div class="modal-discussao">
+
+            <button
+                type="button"
+                class="modal-fechar"
+                id="fecharModal"
+            >
+                ×
+            </button>
+
+            <div class="modal-cabecalho">
+
+                <span class="forum-card-tag">
+                    Nova discussão
+                </span>
+
+                <h2>
+                    Comece uma conversa
+                </h2>
+
+                <p>
+                    Compartilhe uma dúvida, experiência ou dica
+                    com a comunidade.
+                </p>
+
+            </div>
+
+            <form id="formDiscussao">
+
+                <div class="forum-campo">
+
+                    <label for="autorDiscussao">
+                        Seu nome
+                    </label>
+
+                    <input
+                        type="text"
+                        id="autorDiscussao"
+                        placeholder="Como você quer ser identificado?"
+                        maxlength="40"
+                        required
+                    >
+
+                </div>
+
+                <div class="forum-campo">
+
+                    <label for="tituloDiscussao">
+                        Título da discussão
+                    </label>
+
+                    <input
+                        type="text"
+                        id="tituloDiscussao"
+                        placeholder="Ex.: Como me preparar para uma entrevista?"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+                <div class="forum-campo">
+
+                    <label for="categoriaDiscussao">
+                        Categoria
+                    </label>
+
+                    <select
+                        id="categoriaDiscussao"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione uma categoria
+                        </option>
+
+                        <option value="Carreira">
+                            Carreira
+                        </option>
+
+                        <option value="Empresas">
+                            Empresas
+                        </option>
+
+                        <option value="Vagas">
+                            Vagas
+                        </option>
+
+                        <option value="Dicas">
+                            Dicas
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="forum-campo">
+
+                    <label for="textoDiscussao">
+                        Mensagem
+                    </label>
+
+                    <textarea
+                        id="textoDiscussao"
+                        placeholder="Escreva sua mensagem..."
+                        maxlength="800"
+                        required
+                    ></textarea>
+
+                    <small>
+                        Máximo de 800 caracteres.
+                    </small>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="forum-botao-principal forum-botao-enviar"
+                >
+                    Publicar discussão
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script src="forum.js"></script>
+
+</body>
+
+</html>
+
+forum.js
+const chaveForum = "pridework_forum";
+
+const discussoesIniciais = [
+    {
+        id: 1,
+        autor: "Mariana",
+        titulo: "Como se preparar para uma entrevista de emprego?",
+        categoria: "Carreira",
+        texto: "Quais são as melhores formas de se preparar para uma entrevista? Estou procurando meu primeiro emprego e gostaria de algumas dicas.",
+        respostas: 8,
+        data: "Hoje",
+        respostasLista: [
+            {
+                autor: "Lucas",
+                texto: "Uma boa dica é pesquisar bastante sobre a empresa antes da entrevista.",
+                data: "Hoje"
+            },
+            {
+                autor: "Camila",
+                texto: "Também recomendo treinar respostas para perguntas comuns de entrevistas.",
+                data: "Hoje"
+            }
+        ]
+    },
+    {
+        id: 2,
+        autor: "Lucas",
+        titulo: "Alguém já trabalhou nessa empresa?",
+        categoria: "Empresas",
+        texto: "Estou analisando uma oportunidade e gostaria de conhecer a experiência de outras pessoas que já trabalharam nessa empresa.",
+        respostas: 5,
+        data: "Hoje",
+        respostasLista: []
+    },
+    {
+        id: 3,
+        autor: "Rafael",
+        titulo: "Vaga de Analista de Dados",
+        categoria: "Vagas",
+        texto: "Encontrei uma vaga interessante de Analista de Dados. Alguém aqui também está participando desse processo seletivo?",
+        respostas: 12,
+        data: "Ontem",
+        respostasLista: []
+    },
+    {
+        id: 4,
+        autor: "Camila",
+        titulo: "Dicas para melhorar o currículo",
+        categoria: "Dicas",
+        texto: "Estou atualizando meu currículo. O que vocês consideram mais importante para chamar a atenção dos recrutadores?",
+        respostas: 16,
+        data: "Ontem",
+        respostasLista: []
+    },
+    {
+        id: 5,
+        autor: "Pedro",
+        titulo: "Vale a pena fazer cursos antes de procurar emprego?",
+        categoria: "Carreira",
+        texto: "Estou pensando em fazer alguns cursos profissionalizantes antes de começar a enviar currículos. O que vocês acham?",
+        respostas: 7,
+        data: "2 dias atrás",
+        respostasLista: []
+    },
+    {
+        id: 6,
+        autor: "Ana",
+        titulo: "Como identificar uma boa oportunidade de emprego?",
+        categoria: "Vagas",
+        texto: "Quais pontos vocês analisam antes de decidir se uma vaga realmente vale a pena?",
+        respostas: 9,
+        data: "3 dias atrás",
+        respostasLista: []
+    }
+];
+
+let discussoes = [];
+let categoriaAtual = "Todas";
+let pesquisaAtual = "";
+let discussaoAberta = null;
+
+const listaDiscussoes =
+    document.getElementById("listaDiscussões");
+
+const forumVazio =
+    document.getElementById("forumVazio");
+
+const campoPesquisa =
+    document.getElementById("campoPesquisaForum");
+
+const modal =
+    document.getElementById("modalDiscussao");
+
+const abrirModal =
+    document.getElementById("abrirModal");
+
+const fecharModal =
+    document.getElementById("fecharModal");
+
+const formDiscussao =
+    document.getElementById("formDiscussao");
+
+
+/* =========================================
+   CARREGAMENTO
+========================================= */
+
+function carregarDiscussoes() {
+
+    const dadosSalvos =
+        localStorage.getItem(chaveForum);
+
+    if (dadosSalvos) {
+
+        try {
+
+            discussoes =
+                JSON.parse(dadosSalvos);
+
+            discussoes =
+                normalizarDiscussoes(discussoes);
+
+        } catch {
+
+            discussoes =
+                JSON.parse(
+                    JSON.stringify(discussoesIniciais)
+                );
+
+            salvarDiscussoes();
+
+        }
+
+    } else {
+
+        discussoes =
+            JSON.parse(
+                JSON.stringify(discussoesIniciais)
+            );
+
+        salvarDiscussoes();
+
+    }
+
+    renderizarDiscussoes();
+    atualizarContadores();
+}
+
+
+/* =========================================
+   NORMALIZAÇÃO
+========================================= */
+
+function normalizarDiscussoes(lista) {
+
+    return lista.map((discussao) => {
+
+        if (!Array.isArray(discussao.respostasLista)) {
+
+            discussao.respostasLista = [];
+
+        }
+
+        if (
+            typeof discussao.respostas !== "number"
+        ) {
+
+            discussao.respostas =
+                discussao.respostasLista.length;
+
+        }
+
+        return discussao;
+
+    });
+
+}
+
+
+/* =========================================
+   LOCAL STORAGE
+========================================= */
+
+function salvarDiscussoes() {
+
+    localStorage.setItem(
+        chaveForum,
+        JSON.stringify(discussoes)
+    );
+
+}
+
+
+/* =========================================
+   RENDERIZAÇÃO
+========================================= */
+
+function renderizarDiscussoes() {
+
+    if (!listaDiscussoes) {
+        return;
+    }
+
+    const resultado =
+        discussoes.filter((discussao) => {
+
+            const correspondeCategoria =
+                categoriaAtual === "Todas" ||
+                discussao.categoria === categoriaAtual;
+
+            const textoPesquisa =
+                pesquisaAtual
+                    .toLowerCase()
+                    .trim();
+
+            const correspondePesquisa =
+                discussao.titulo
+                    .toLowerCase()
+                    .includes(textoPesquisa) ||
+
+                discussao.texto
+                    .toLowerCase()
+                    .includes(textoPesquisa) ||
+
+                discussao.autor
+                    .toLowerCase()
+                    .includes(textoPesquisa);
+
+            return (
+                correspondeCategoria &&
+                correspondePesquisa
+            );
+
+        });
+
+    listaDiscussoes.innerHTML = "";
+
+    if (resultado.length === 0) {
+
+        if (forumVazio) {
+
+            forumVazio.classList.add("visivel");
+
+        }
+
+        return;
+
+    }
+
+    if (forumVazio) {
+
+        forumVazio.classList.remove("visivel");
+
+    }
+
+    resultado.forEach((discussao) => {
+
+        const card =
+            document.createElement("article");
+
+        card.className =
+            "discussao-card";
+
+        card.dataset.id =
+            discussao.id;
+
+        card.innerHTML = `
+
+            <div class="discussao-card-topo">
+
+                <span class="discussao-categoria">
+                    ${escaparHTML(discussao.categoria)}
+                </span>
+
+                <span class="discussao-data">
+                    ${escaparHTML(discussao.data)}
+                </span>
+
+            </div>
+
+            <h3>
+                ${escaparHTML(discussao.titulo)}
+            </h3>
+
+            <p>
+                ${escaparHTML(discussao.texto)}
+            </p>
+
+            <div class="discussao-card-footer">
+
+                <div class="discussao-autor">
+
+                    <span class="autor-avatar">
+                        ${obterInicial(discussao.autor)}
+                    </span>
+
+                    <span>
+                        ${escaparHTML(discussao.autor)}
+                    </span>
+
+                </div>
+
+                <span class="discussao-respostas">
+
+                    ${discussao.respostas}
+
+                    resposta${discussao.respostas === 1 ? "" : "s"}
+
+                </span>
+
+            </div>
+
+        `;
+
+        card.addEventListener(
+            "click",
+            () => abrirDiscussao(discussao.id)
+        );
+
+        listaDiscussoes.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================
+   CONTADORES
+========================================= */
+
+function atualizarContadores() {
+
+    const categorias = [
+        "Carreira",
+        "Empresas",
+        "Vagas",
+        "Dicas"
+    ];
+
+    categorias.forEach((categoria) => {
+
+        const contador =
+            discussoes.filter(
+                (discussao) =>
+                    discussao.categoria === categoria
+            ).length;
+
+        const elemento =
+            document.getElementById(
+                `contador${categoria}`
+            );
+
+        if (elemento) {
+
+            elemento.textContent =
+                contador;
+
+        }
+
+    });
+
+}
+
+
+/* =========================================
+   UTILITÁRIOS
+========================================= */
+
+function obterInicial(nome) {
+
+    if (!nome) {
+        return "?";
+    }
+
+    return nome
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+}
+
+
+function escaparHTML(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        texto;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   MODAL DE NOVA DISCUSSÃO
+========================================= */
+
+function abrirJanelaModal() {
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.add("aberto");
+
+    document.body.classList.add(
+        "modal-aberto"
+    );
+
+    setTimeout(() => {
+
+        const campoAutor =
+            document.getElementById(
+                "autorDiscussao"
+            );
+
+        if (campoAutor) {
+
+            campoAutor.focus();
+
+        }
+
+    }, 100);
+
+}
+
+
+function fecharJanelaModal() {
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("aberto");
+
+    document.body.classList.remove(
+        "modal-aberto"
+    );
+
+}
+
+
+/* =========================================
+   EVENTOS DO MODAL
+========================================= */
+
+if (abrirModal) {
+
+    abrirModal.addEventListener(
+        "click",
+        abrirJanelaModal
+    );
+
+}
+
+if (fecharModal) {
+
+    fecharModal.addEventListener(
+        "click",
+        fecharJanelaModal
+    );
+
+}
+
+if (modal) {
+
+    modal.addEventListener(
+        "click",
+        (evento) => {
+
+            if (
+                evento.target === modal
+            ) {
+
+                fecharJanelaModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   ESC PARA FECHAR
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    (evento) => {
+
+        if (
+            evento.key === "Escape"
+        ) {
+
+            if (
+                modal &&
+                modal.classList.contains("aberto")
+            ) {
+
+                fecharJanelaModal();
+
+            }
+
+            fecharDiscussao();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   PESQUISA
+========================================= */
+
+if (campoPesquisa) {
+
+    campoPesquisa.addEventListener(
+        "input",
+        () => {
+
+            pesquisaAtual =
+                campoPesquisa.value.trim();
+
+            renderizarDiscussoes();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   FILTROS
+========================================= */
+
+document
+    .querySelectorAll(".filtro")
+    .forEach((botao) => {
+
+        botao.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".filtro")
+                    .forEach((item) => {
+
+                        item.classList.remove(
+                            "ativo"
+                        );
+
+                    });
+
+                botao.classList.add(
+                    "ativo"
+                );
+
+                categoriaAtual =
+                    botao.dataset.categoria;
+
+                renderizarDiscussoes();
+
+            }
+        );
+
+    });
+
+
+/* =========================================
+   CATEGORIAS DA SIDEBAR
+========================================= */
+
+document
+    .querySelectorAll(
+        ".categoria-lista button"
+    )
+    .forEach((botao) => {
+
+        botao.addEventListener(
+            "click",
+            () => {
+
+                categoriaAtual =
+                    botao.dataset.categoria;
+
+                document
+                    .querySelectorAll(".filtro")
+                    .forEach((item) => {
+
+                        item.classList.toggle(
+                            "ativo",
+                            item.dataset.categoria ===
+                                categoriaAtual
+                        );
+
+                    });
+
+                renderizarDiscussoes();
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+    });
+
+
+/* =========================================
+   CRIAR NOVA DISCUSSÃO
+========================================= */
+
+if (formDiscussao) {
+
+    formDiscussao.addEventListener(
+        "submit",
+        (evento) => {
+
+            evento.preventDefault();
+
+            const autor =
+                document
+                    .getElementById(
+                        "autorDiscussao"
+                    )
+                    ?.value
+                    .trim();
+
+            const titulo =
+                document
+                    .getElementById(
+                        "tituloDiscussao"
+                    )
+                    ?.value
+                    .trim();
+
+            const categoria =
+                document
+                    .getElementById(
+                        "categoriaDiscussao"
+                    )
+                    ?.value;
+
+            const texto =
+                document
+                    .getElementById(
+                        "textoDiscussao"
+                    )
+                    ?.value
+                    .trim();
+
+            if (
+                !autor ||
+                !titulo ||
+                !categoria ||
+                !texto
+            ) {
+
+                return;
+
+            }
+
+            const novaDiscussao = {
+
+                id: Date.now(),
+
+                autor,
+
+                titulo,
+
+                categoria,
+
+                texto,
+
+                respostas: 0,
+
+                respostasLista: [],
+
+                data: "Agora"
+
+            };
+
+            discussoes.unshift(
+                novaDiscussao
+            );
+
+            salvarDiscussoes();
+
+            categoriaAtual =
+                categoria;
+
+            pesquisaAtual = "";
+
+            if (campoPesquisa) {
+
+                campoPesquisa.value = "";
+
+            }
+
+            document
+                .querySelectorAll(".filtro")
+                .forEach((item) => {
+
+                    item.classList.toggle(
+                        "ativo",
+                        item.dataset.categoria ===
+                            categoria
+                    );
+
+                });
+
+            formDiscussao.reset();
+
+            fecharJanelaModal();
+
+            atualizarContadores();
+
+            renderizarDiscussoes();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   ABRIR DISCUSSÃO
+========================================= */
+
+function abrirDiscussao(id) {
+
+    const discussao =
+        discussoes.find(
+            (item) =>
+                item.id === id
+        );
+
+    if (!discussao) {
+        return;
+    }
+
+    discussaoAberta =
+        discussao;
+
+    const modalDiscussao =
+        document.createElement("div");
+
+    modalDiscussao.className =
+        "modal-discussao-detalhes";
+
+    modalDiscussao.id =
+        "modalDetalhesForum";
+
+    const respostasHTML =
+        gerarRespostasHTML(
+            discussao
+        );
+
+    modalDiscussao.innerHTML = `
+
+        <div class="modal-discussao-conteudo">
+
+            <button
+                class="modal-discussao-fechar"
+                id="fecharDetalhesForum"
+                aria-label="Fechar discussão"
+            >
+                ×
+            </button>
+
+            <div class="detalhes-categoria">
+                ${escaparHTML(discussao.categoria)}
+            </div>
+
+            <h2>
+                ${escaparHTML(discussao.titulo)}
+            </h2>
+
+            <div class="detalhes-autor">
+
+                <span class="autor-avatar grande">
+                    ${obterInicial(discussao.autor)}
+                </span>
+
+                <div>
+
+                    <strong>
+                        ${escaparHTML(discussao.autor)}
+                    </strong>
+
+                    <small>
+                        ${escaparHTML(discussao.data)}
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="detalhes-texto">
+                ${escaparHTML(discussao.texto)}
+            </div>
+
+            <div class="detalhes-respostas">
+
+                <div class="respostas-cabecalho">
+
+                    <h3>
+                        Respostas
+                    </h3>
+
+                    <span>
+                        ${discussao.respostas}
+                    </span>
+
+                </div>
+
+                <div id="listaRespostasForum">
+
+                    ${respostasHTML}
+
+                </div>
+
+            </div>
+
+            <form
+                id="formRespostaForum"
+                class="form-resposta-forum"
+            >
+
+                <h3>
+                    Participar da discussão
+                </h3>
+
+                <input
+                    type="text"
+                    id="autorRespostaForum"
+                    placeholder="Seu nome"
+                    maxlength="60"
+                    required
+                >
+
+                <textarea
+                    id="textoRespostaForum"
+                    placeholder="Escreva sua resposta..."
+                    maxlength="1000"
+                    required
+                ></textarea>
+
+                <button
+                    type="submit"
+                    class="botao-responder"
+                >
+                    Responder
+                </button>
+
+            </form>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(
+        modalDiscussao
+    );
+
+    document.body.classList.add(
+        "modal-aberto"
+    );
+
+    const fechar =
+        document.getElementById(
+            "fecharDetalhesForum"
+        );
+
+    fechar.addEventListener(
+        "click",
+        fecharDiscussao
+    );
+
+    modalDiscussao.addEventListener(
+        "click",
+        (evento) => {
+
+            if (
+                evento.target ===
+                modalDiscussao
+            ) {
+
+                fecharDiscussao();
+
+            }
+
+        }
+    );
+
+    const formResposta =
+        document.getElementById(
+            "formRespostaForum"
+        );
+
+    formResposta.addEventListener(
+        "submit",
+        adicionarResposta
+    );
+
+    setTimeout(() => {
+
+        document
+            .getElementById(
+                "autorRespostaForum"
+            )
+            ?.focus();
+
+    }, 100);
+
+}
+
+
+/* =========================================
+   GERAR RESPOSTAS
+========================================= */
+
+function gerarRespostasHTML(discussao) {
+
+    if (
+        !discussao.respostasLista ||
+        discussao.respostasLista.length === 0
+    ) {
+
+        return `
+
+            <div class="sem-respostas">
+
+                <strong>
+                    Ainda não há respostas registradas.
+                </strong>
+
+                <p>
+                    Seja a primeira pessoa a participar desta discussão.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+    return discussao.respostasLista
+        .map((resposta) => {
+
+            return `
+
+                <div class="resposta-forum">
+
+                    <div class="resposta-topo">
+
+                        <div class="resposta-autor">
+
+                            <span class="autor-avatar">
+                                ${obterInicial(resposta.autor)}
+                            </span>
+
+                            <strong>
+                                ${escaparHTML(resposta.autor)}
+                            </strong>
+
+                        </div>
+
+                        <small>
+                            ${escaparHTML(resposta.data)}
+                        </small>
+
+                    </div>
+
+                    <p>
+                        ${escaparHTML(resposta.texto)}
+                    </p>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =========================================
+   ADICIONAR RESPOSTA
+========================================= */
+
+function adicionarResposta(evento) {
+
+    evento.preventDefault();
+
+    if (!discussaoAberta) {
+        return;
+    }
+
+    const autor =
+        document
+            .getElementById(
+                "autorRespostaForum"
+            )
+            .value
+            .trim();
+
+    const texto =
+        document
+            .getElementById(
+                "textoRespostaForum"
+            )
+            .value
+            .trim();
+
+    if (!autor || !texto) {
+        return;
+    }
+
+    const resposta = {
+
+        autor,
+
+        texto,
+
+        data: "Agora"
+
+    };
+
+    if (
+        !Array.isArray(
+            discussaoAberta.respostasLista
+        )
+    ) {
+
+        discussaoAberta.respostasLista = [];
+
+    }
+
+    discussaoAberta.respostasLista.push(
+        resposta
+    );
+
+    discussaoAberta.respostas =
+        discussaoAberta.respostasLista.length;
+
+    salvarDiscussoes();
+
+    const lista =
+        document.getElementById(
+            "listaRespostasForum"
+        );
+
+    if (lista) {
+
+        lista.innerHTML =
+            gerarRespostasHTML(
+                discussaoAberta
+            );
+
+    }
+
+    const cabecalho =
+        document.querySelector(
+            ".respostas-cabecalho span"
+        );
+
+    if (cabecalho) {
+
+        cabecalho.textContent =
+            discussaoAberta.respostas;
+
+    }
+
+    const form =
+        document.getElementById(
+            "formRespostaForum"
+        );
+
+    if (form) {
+
+        form.reset();
+
+    }
+
+    renderizarDiscussoes();
+
+}
+
+
+/* =========================================
+   FECHAR DISCUSSÃO
+========================================= */
+
+function fecharDiscussao() {
+
+    const modalDetalhes =
+        document.getElementById(
+            "modalDetalhesForum"
+        );
+
+    if (modalDetalhes) {
+
+        modalDetalhes.remove();
+
+    }
+
+    discussaoAberta = null;
+
+    document.body.classList.remove(
+        "modal-aberto"
+    );
+
+}
+
+
+/* =========================================
+   INICIALIZAÇÃO
+========================================= */
+
+carregarDiscussoes();
+
+index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PrideWork - Encontre seu próximo emprego</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="forum.html">
+                    Fórum
+                </a> 
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Encontre oportunidades.
+                Conheça as empresas.
+            </h1>
+
+            <p>
+                Encontre vagas de emprego e tenha mais
+                informações sobre as empresas antes de
+                tomar sua decisão.
+            </p>
+
+            <div class="search-container">
+
+                <div class="search-box">
+
+                    <div class="campo-container">
+
+                        <input
+                            type="text"
+                            id="campoBusca"
+                            placeholder="Cargo, palavra-chave ou empresa"
+                            autocomplete="off"
+                        >
+
+                        <div
+                            id="sugestoes"
+                            class="sugestoes"
+                        ></div>
+
+                    </div>
+
+                    <input
+                        type="text"
+                        id="campoLocalizacao"
+                        placeholder="Cidade ou estado"
+                    >
+
+                    <button
+                        id="botaoBuscar"
+                        class="search-button"
+                    >
+                        Buscar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="destaques">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Vagas em destaque
+                    </h2>
+
+                    <p>
+                        Algumas oportunidades que podem combinar
+                        com seu perfil.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                id="vagasDestaque"
+                class="cards"
+            >
+
+                <p>
+                    Carregando vagas...
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <main id="vagas">
+
+        <section class="container">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Vagas disponíveis
+                    </h2>
+
+                    <p>
+                        Encontre oportunidades que combinam
+                        com seu perfil.
+                    </p>
+
+                </div>
+
+                <span
+                    id="contadorResultados"
+                    class="contador"
+                >
+                    Carregando vagas...
+                </span>
+
+            </div>
+
+            <div
+                id="resultados"
+                class="cards"
+            >
+
+                <p id="mensagemInicial">
+                    Carregando vagas...
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="container">
+
+            <div class="transparency">
+
+                <div class="transparency-text">
+
+                    <h2>
+                        Antes de aceitar uma vaga,
+                        conheça a empresa.
+                    </h2>
+
+                    <p>
+                        A PrideWork busca promover mais
+                        transparência e informação para
+                        profissionais durante sua busca
+                        por oportunidades.
+                    </p>
+
+                    <a href="#" class="button">
+                        Pesquisar empresa
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+                <section class="container">
+
+            <div class="denuncia">
+
+                <div>
+
+                    <h2>
+                        Sua experiência pode ajudar
+                        outras pessoas.
+                    </h2>
+
+                    <p>
+                        Relate situações de má conduta
+                        para ajudar nossa comunidade a
+                        encontrar informações importantes.
+                    </p>
+
+                </div>
+
+                <a href="denunciar.html" class="button">
+                    Fazer uma denúncia
+                </a>
+
+            </div>
+
+        </section>
+
+        <section class="container">
+
+            <div class="feedback-home">
+
+                <div class="feedback-home-text">
+
+                    <span class="feedback-home-tag">
+                        Feedback
+                    </span>
+
+                    <h2>
+                        Ajude a melhorar a PrideWork.
+                    </h2>
+
+                    <p>
+                        Conte para nós como foi sua experiência
+                        utilizando a plataforma. Seu feedback
+                        ajuda a tornar a PrideWork cada vez melhor.
+                    </p>
+
+                    <a href="feedback.html" class="button">
+                        Enviar feedback
+                    </a>
+
+                </div>
+
+                <div class="feedback-home-card">
+
+                    <div class="feedback-home-icon">
+                        ★
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Sua opinião importa
+                        </strong>
+
+                        <p>
+                            Avalie sua experiência e deixe
+                            sugestões para a plataforma.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+    </main>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+
+script.js
+let vagas = [];
+
+const campoBusca = document.getElementById("campoBusca");
+const campoLocalizacao = document.getElementById("campoLocalizacao");
+const sugestoes = document.getElementById("sugestoes");
+const resultados = document.getElementById("resultados");
+const contadorResultados = document.getElementById("contadorResultados");
+const vagasDestaque = document.getElementById("vagasDestaque");
+const botaoBuscar = document.getElementById("botaoBuscar");
+
+if (campoBusca && campoLocalizacao && sugestoes && resultados && contadorResultados) {
+
+    fetch("vagas.json")
+
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error("Não foi possível carregar as vagas.");
+            }
+
+            return response.json();
+
+        })
+
+        .then(data => {
+
+            vagas = data;
+
+            if (vagasDestaque) {
+                mostrarVagasDestaque(vagas);
+            }
+
+            mostrarVagas(vagas);
+
+        })
+
+        .catch(error => {
+
+            console.error("Erro ao carregar vagas:", error);
+
+            resultados.innerHTML = `
+                <div class="erro-vaga">
+                    <h3>
+                        Não foi possível carregar as vagas.
+                    </h3>
+
+                    <p>
+                        Tente novamente mais tarde.
+                    </p>
+                </div>
+            `;
+
+        });
+
+    campoBusca.addEventListener("input", function () {
+
+        const texto = this.value.trim().toLowerCase();
+
+        if (texto.length === 0) {
+
+            sugestoes.innerHTML = "";
+            sugestoes.style.display = "none";
+
+            return;
+
+        }
+
+        const correspondentes = vagas
+            .filter(vaga =>
+                vaga.titulo.toLowerCase().includes(texto) ||
+                vaga.categoria.toLowerCase().includes(texto) ||
+                vaga.empresa.toLowerCase().includes(texto)
+            )
+            .slice(0, 5);
+
+        if (correspondentes.length === 0) {
+
+            sugestoes.innerHTML = "";
+            sugestoes.style.display = "none";
+
+            return;
+
+        }
+
+        sugestoes.innerHTML = correspondentes.map(vaga => `
+
+            <div
+                class="sugestao"
+                onclick="selecionarSugestao('${vaga.titulo}')"
+            >
+
+                <span class="icone-busca">
+                    ⌕
+                </span>
+
+                <div>
+
+                    <strong>
+                        ${vaga.titulo}
+                    </strong>
+
+                    <small>
+                        ${vaga.empresa} - ${vaga.localizacao}
+                    </small>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+        sugestoes.style.display = "block";
+
+    });
+
+    if (botaoBuscar) {
+        botaoBuscar.addEventListener("click", pesquisarVagas);
+    }
+
+    campoBusca.addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+            pesquisarVagas();
+        }
+
+    });
+
+    campoLocalizacao.addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+            pesquisarVagas();
+        }
+
+    });
+
+    document.addEventListener("click", function (event) {
+
+        if (
+            campoBusca &&
+            sugestoes &&
+            !campoBusca.contains(event.target) &&
+            !sugestoes.contains(event.target)
+        ) {
+
+            sugestoes.style.display = "none";
+
+        }
+
+    });
+
+}
+
+function selecionarSugestao(titulo) {
+
+    if (!campoBusca || !sugestoes) {
+        return;
+    }
+
+    campoBusca.value = titulo;
+
+    sugestoes.innerHTML = "";
+    sugestoes.style.display = "none";
+
+    pesquisarVagas();
+
+}
+
+function pesquisarVagas() {
+
+    if (!campoBusca || !campoLocalizacao) {
+        return;
+    }
+
+    const busca =
+        campoBusca.value.trim().toLowerCase();
+
+    const localizacao =
+        campoLocalizacao.value.trim().toLowerCase();
+
+    const vagasFiltradas = vagas.filter(vaga => {
+
+        const correspondeBusca =
+            busca === "" ||
+            vaga.titulo.toLowerCase().includes(busca) ||
+            vaga.empresa.toLowerCase().includes(busca) ||
+            vaga.categoria.toLowerCase().includes(busca);
+
+        const correspondeLocalizacao =
+            localizacao === "" ||
+            vaga.localizacao.toLowerCase().includes(localizacao);
+
+        return (
+            correspondeBusca &&
+            correspondeLocalizacao
+        );
+
+    });
+
+    sugestoes.innerHTML = "";
+    sugestoes.style.display = "none";
+
+    mostrarVagas(vagasFiltradas);
+
+}
+
+function mostrarVagasDestaque(lista) {
+
+    if (!vagasDestaque) {
+        return;
+    }
+
+    const destaques = lista.slice(0, 3);
+
+    vagasDestaque.innerHTML = destaques.map(vaga => `
+
+        <article class="vaga-card destaque-card">
+
+            <div class="vaga-topo">
+
+                <span class="tag">
+                    ${vaga.categoria}
+                </span>
+
+                <span class="modalidade">
+                    ${vaga.modalidade}
+                </span>
+
+            </div>
+
+            <h3>
+                ${vaga.titulo}
+            </h3>
+
+            <p class="empresa">
+                ${vaga.empresa}
+            </p>
+
+            <p class="localizacao">
+                ${vaga.localizacao}
+            </p>
+
+            <div class="vaga-informacoes">
+
+                <span>
+                    ${vaga.salario}
+                </span>
+
+                <span>
+                    ${vaga.tipo}
+                </span>
+
+            </div>
+
+            <button
+                class="ver-vaga"
+                onclick="verVaga(${vaga.id})"
+            >
+                Ver vaga
+            </button>
+
+        </article>
+
+    `).join("");
+
+}
+
+function mostrarVagas(lista) {
+
+    if (!resultados || !contadorResultados) {
+        return;
+    }
+
+    contadorResultados.textContent =
+        `${lista.length} vaga${lista.length !== 1 ? "s" : ""} encontrada${lista.length !== 1 ? "s" : ""}`;
+
+    if (lista.length === 0) {
+
+        resultados.innerHTML = `
+
+            <div class="nenhum-resultado">
+
+                <h3>
+                    Nenhuma vaga encontrada
+                </h3>
+
+                <p>
+                    Tente pesquisar outro cargo,
+                    empresa ou região.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    resultados.innerHTML = lista.map(vaga => `
+
+        <article class="vaga-card">
+
+            <div class="vaga-topo">
+
+                <span class="tag">
+                    ${vaga.categoria}
+                </span>
+
+                <span class="modalidade">
+                    ${vaga.modalidade}
+                </span>
+
+            </div>
+
+            <h3>
+                ${vaga.titulo}
+            </h3>
+
+            <p class="empresa">
+                ${vaga.empresa}
+            </p>
+
+            <p class="localizacao">
+                ${vaga.localizacao}
+            </p>
+
+            <div class="vaga-informacoes">
+
+                <span>
+                    ${vaga.salario}
+                </span>
+
+                <span>
+                    ${vaga.tipo}
+                </span>
+
+                <span>
+                    ${vaga.nivel}
+                </span>
+
+            </div>
+
+            <p class="descricao">
+                ${vaga.descricao}
+            </p>
+
+            <button
+                class="ver-vaga"
+                onclick="verVaga(${vaga.id})"
+            >
+                Ver vaga
+            </button>
+
+        </article>
+
+    `).join("");
+
+}
+
+function verVaga(id) {
+
+    window.location.href =
+        `vaga.html?id=${id}`;
+
+}
+
+style.css
+:root {
+
+    --cor-principal: #4f46e5;
+    --cor-principal-hover: #4338ca;
+    --cor-secundaria: #7c3aed;
+
+    --cor-texto: #1f2937;
+    --cor-texto-secundario: #6b7280;
+
+    --cor-fundo: #f5f7fb;
+    --cor-branco: #ffffff;
+
+    --cor-borda: #e5e7eb;
+
+    --cor-sucesso: #16a34a;
+    --cor-sucesso-fundo: #ecfdf3;
+
+    --cor-alerta: #b45309;
+    --cor-alerta-fundo: #fff7ed;
+
+    --sombra-card:
+        0 10px 30px rgba(15, 23, 42, 0.08);
+
+    --sombra-hover:
+        0 14px 35px rgba(15, 23, 42, 0.12);
+
+    --raio-pequeno: 8px;
+    --raio-medio: 14px;
+    --raio-grande: 20px;
+
+}
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        var(--cor-fundo);
+
+    color:
+        var(--cor-texto);
+
+    line-height:
+        1.6;
+
+}
+
+a {
+
+    color:
+        inherit;
+
+    text-decoration:
+        none;
+
+}
+
+button,
+input,
+textarea,
+select {
+
+    font-family:
+        inherit;
+
+}
+
+button {
+
+    cursor:
+        pointer;
+
+}
+
+header {
+
+    background:
+        var(--cor-branco);
+
+    border-bottom:
+        1px solid var(--cor-borda);
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    z-index:
+        100;
+
+}
+
+.navbar {
+
+    max-width:
+        1200px;
+
+    margin:
+        0 auto;
+
+    min-height:
+        74px;
+
+    padding:
+        0 24px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+}
+
+.logo {
+
+    font-size:
+        27px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        -1px;
+
+    color:
+        var(--cor-principal);
+
+}
+
+.logo span {
+
+    color:
+        var(--cor-secundaria);
+
+}
+
+.menu {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        28px;
+
+}
+
+.menu a {
+
+    color:
+        var(--cor-texto-secundario);
+
+    font-size:
+        15px;
+
+    font-weight:
+        600;
+
+    transition:
+        color 0.2s ease;
+
+}
+
+.menu a:hover {
+
+    color:
+        var(--cor-principal);
+
+}
+
+.menu .login {
+
+    padding:
+        9px 17px;
+
+    border:
+        1px solid var(--cor-principal);
+
+    border-radius:
+        var(--raio-pequeno);
+
+    color:
+        var(--cor-principal);
+
+}
+
+.menu .login:hover {
+
+    background:
+        var(--cor-principal);
+
+    color:
+        white;
+
+}
+
+.hero {
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff 0%,
+            #f5f3ff 50%,
+            #ffffff 100%
+        );
+
+    border-bottom:
+        1px solid var(--cor-borda);
+
+}
+
+.hero-content {
+
+    max-width:
+        1100px;
+
+    margin:
+        0 auto;
+
+    padding:
+        90px 24px 85px;
+
+    text-align:
+        center;
+
+}
+
+.hero-content h1 {
+
+    max-width:
+        800px;
+
+    margin:
+        0 auto;
+
+    font-size:
+        48px;
+
+    line-height:
+        1.12;
+
+    letter-spacing:
+        -1.5px;
+
+}
+
+.hero-content p {
+
+    max-width:
+        700px;
+
+    margin:
+        20px auto 0;
+
+    color:
+        var(--cor-texto-secundario);
+
+    font-size:
+        18px;
+
+}
+
+.search-container {
+
+    max-width:
+        900px;
+
+    margin:
+        38px auto 0;
+
+}
+
+.search-box {
+
+    background:
+        white;
+
+    padding:
+        10px;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        16px;
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.10);
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1.4fr 1fr auto;
+
+    gap:
+        8px;
+
+}
+
+.campo-container {
+
+    position:
+        relative;
+
+}
+
+.search-box input {
+
+    width:
+        100%;
+
+    height:
+        50px;
+
+    border:
+        none;
+
+    outline:
+        none;
+
+    padding:
+        0 15px;
+
+    font-size:
+        14px;
+
+    color:
+        var(--cor-texto);
+
+    background:
+        #fafafa;
+
+    border-radius:
+        10px;
+
+}
+
+.search-box input:focus {
+
+    background:
+        #f5f3ff;
+
+}
+
+.search-button {
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--cor-principal);
+
+    color:
+        white;
+
+    padding:
+        0 27px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    transition:
+        0.2s ease;
+
+}
+
+.search-button:hover {
+
+    background:
+        var(--cor-principal-hover);
+
+    transform:
+        translateY(-1px);
+
+}
+
+.sugestoes {
+
+    position:
+        absolute;
+
+    top:
+        calc(100% + 6px);
+
+    left:
+        0;
+
+    right:
+        0;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        10px;
+
+    box-shadow:
+        var(--sombra-card);
+
+    z-index:
+        50;
+
+    overflow:
+        hidden;
+
+}
+
+.sugestoes div {
+
+    padding:
+        12px 15px;
+
+    text-align:
+        left;
+
+    cursor:
+        pointer;
+
+    font-size:
+        14px;
+
+}
+
+.sugestoes div:hover {
+
+    background:
+        #f5f3ff;
+
+    color:
+        var(--cor-principal);
+
+}
+
+.container {
+
+    max-width:
+        1200px;
+
+    margin:
+        0 auto;
+
+    padding:
+        65px 24px;
+
+}
+
+.section-title {
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    margin-bottom:
+        28px;
+
+}
+
+.section-title h2 {
+
+    font-size:
+        28px;
+
+    letter-spacing:
+        -0.5px;
+
+}
+
+.section-title p {
+
+    margin-top:
+        5px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.contador {
+
+    padding:
+        7px 12px;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        999px;
+
+    color:
+        var(--cor-texto-secundario);
+
+    font-size:
+        13px;
+
+    white-space:
+        nowrap;
+
+}
+
+.cards {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:
+        22px;
+
+}
+
+.cards > p {
+
+    grid-column:
+        1 / -1;
+
+    text-align:
+        center;
+
+    color:
+        var(--cor-texto-secundario);
+
+    padding:
+        40px;
+
+}
+
+.card {
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-medio);
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 5px 20px rgba(15, 23, 42, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+.card:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        var(--sombra-hover);
+
+    border-color:
+        #c7d2fe;
+
+}
+
+.card h3 {
+
+    margin:
+        10px 0 5px;
+
+    font-size:
+        19px;
+
+}
+
+.card p {
+
+    color:
+        var(--cor-texto-secundario);
+
+    font-size:
+        14px;
+
+}
+
+.card .button,
+.card button {
+
+    display:
+        inline-block;
+
+    margin-top:
+        18px;
+
+    padding:
+        10px 15px;
+
+    border:
+        none;
+
+    border-radius:
+        8px;
+
+    background:
+        var(--cor-principal);
+
+    color:
+        white;
+
+    font-weight:
+        700;
+
+    font-size:
+        13px;
+
+}
+
+.transparency {
+
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #312e81
+        );
+
+    border-radius:
+        var(--raio-grande);
+
+    padding:
+        50px;
+
+    color:
+        white;
+
+    box-shadow:
+        var(--sombra-card);
+
+}
+
+.transparency-text {
+
+    max-width:
+        700px;
+
+}
+
+.transparency h2 {
+
+    font-size:
+        30px;
+
+    line-height:
+        1.2;
+
+}
+
+.transparency p {
+
+    margin:
+        15px 0 25px;
+
+    color:
+        #d1d5db;
+
+}
+
+.button {
+
+    display:
+        inline-block;
+
+    padding:
+        12px 20px;
+
+    border-radius:
+        var(--raio-pequeno);
+
+    background:
+        var(--cor-principal);
+
+    color:
+        white;
+
+    font-weight:
+        700;
+
+    font-size:
+        14px;
+
+    transition:
+        0.2s ease;
+
+}
+
+.button:hover {
+
+    background:
+        var(--cor-principal-hover);
+
+    transform:
+        translateY(-1px);
+
+}
+
+.denuncia {
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-grande);
+
+    padding:
+        38px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        30px;
+
+    box-shadow:
+        var(--sombra-card);
+
+}
+
+.denuncia h2 {
+
+    font-size:
+        25px;
+
+}
+
+.denuncia p {
+
+    max-width:
+        650px;
+
+    margin-top:
+        8px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.feedback-home {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff 0%,
+            #f5f3ff 55%,
+            #ffffff 100%
+        );
+
+    border:
+        1px solid #ddd6fe;
+
+    border-radius:
+        24px;
+
+    padding:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        40px;
+
+    box-shadow:
+        0 12px 35px rgba(79, 70, 229, 0.10);
+
+}
+
+.feedback-home::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        220px;
+
+    height:
+        220px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(124, 58, 237, 0.08);
+
+    top:
+        -100px;
+
+    right:
+        -70px;
+
+}
+
+.feedback-home::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        140px;
+
+    height:
+        140px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(79, 70, 229, 0.06);
+
+    bottom:
+        -70px;
+
+    left:
+        35%;
+
+}
+
+.feedback-home-text {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    max-width:
+        700px;
+
+}
+
+.feedback-home-tag {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    padding:
+        7px 13px;
+
+    border:
+        1px solid #ddd6fe;
+
+    border-radius:
+        999px;
+
+    background:
+        #ffffff;
+
+    color:
+        #5b21b6;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        15px;
+
+    box-shadow:
+        0 4px 12px rgba(79, 70, 229, 0.06);
+
+}
+
+.feedback-home-tag::before {
+
+    content:
+        "•";
+
+    color:
+        #6366f1;
+
+    font-size:
+        17px;
+
+    line-height:
+        0;
+
+}
+
+.feedback-home h2 {
+
+    font-size:
+        30px;
+
+    line-height:
+        1.2;
+
+    letter-spacing:
+        -0.5px;
+
+    margin-bottom:
+        12px;
+
+    color:
+        #1f2937;
+
+}
+
+.feedback-home-text p {
+
+    color:
+        #6b7280;
+
+    max-width:
+        650px;
+
+    margin-bottom:
+        25px;
+
+    font-size:
+        15px;
+
+    line-height:
+        1.7;
+
+}
+
+.feedback-home .button {
+
+    padding:
+        13px 21px;
+
+    box-shadow:
+        0 6px 16px rgba(79, 70, 229, 0.20);
+
+}
+
+.feedback-home .button:hover {
+
+    box-shadow:
+        0 9px 20px rgba(79, 70, 229, 0.28);
+
+}
+
+.feedback-home-card {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    min-width:
+        290px;
+
+    max-width:
+        320px;
+
+    padding:
+        25px;
+
+    background:
+        rgba(255, 255, 255, 0.90);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.90);
+
+    border-radius:
+        18px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.08);
+
+    backdrop-filter:
+        blur(8px);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+.feedback-home-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 16px 35px rgba(15, 23, 42, 0.12);
+
+}
+
+.feedback-home-icon {
+
+    width:
+        54px;
+
+    height:
+        54px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color:
+        white;
+
+    font-size:
+        22px;
+
+    font-weight:
+        800;
+
+    box-shadow:
+        0 8px 18px rgba(79, 70, 229, 0.25);
+
+}
+
+.feedback-home-card strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    color:
+        #1f2937;
+
+    font-size:
+        15px;
+
+}
+
+.feedback-home-card p {
+
+    margin:
+        0;
+
+    color:
+        #6b7280;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+
+}
+
+.vaga-detalhes-container {
+
+    max-width:
+        1120px;
+
+    margin:
+        0 auto;
+
+    padding:
+        45px 24px 70px;
+
+}
+
+.voltar {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    margin-bottom:
+        24px;
+
+    color:
+        var(--cor-principal);
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+
+}
+
+.voltar:hover {
+
+    text-decoration:
+        underline;
+
+}
+
+.vaga-detalhes {
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-grande);
+
+    box-shadow:
+        var(--sombra-card);
+
+    overflow:
+        hidden;
+
+}
+
+.vaga-cabecalho {
+
+    padding:
+        38px;
+
+    border-bottom:
+        1px solid var(--cor-borda);
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        30px;
+
+}
+
+.vaga-cabecalho h1 {
+
+    margin-top:
+        13px;
+
+    font-size:
+        34px;
+
+    line-height:
+        1.2;
+
+}
+
+.vaga-cabecalho h2 {
+
+    margin-top:
+        7px;
+
+    font-size:
+        18px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.vaga-local {
+
+    margin-top:
+        8px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.vaga-acoes {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+    min-width:
+        190px;
+
+}
+
+.botao-candidatar,
+.botao-enviar-candidatura,
+.botao-enviar-denuncia {
+
+    border:
+        none;
+
+    border-radius:
+        var(--raio-pequeno);
+
+    background:
+        var(--cor-principal);
+
+    color:
+        white;
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+    padding:
+        13px 22px;
+
+    transition:
+        0.2s ease;
+
+}
+
+.botao-candidatar:hover,
+.botao-enviar-candidatura:hover,
+.botao-enviar-denuncia:hover {
+
+    background:
+        var(--cor-principal-hover);
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(79, 70, 229, 0.25);
+
+}
+
+.botao-salvar {
+
+    border:
+        1px solid var(--cor-borda);
+
+    background:
+        white;
+
+    color:
+        var(--cor-texto);
+
+    border-radius:
+        var(--raio-pequeno);
+
+    padding:
+        12px 18px;
+
+    font-weight:
+        600;
+
+}
+
+.vaga-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 320px;
+
+}
+
+.vaga-principal {
+
+    padding:
+        38px;
+
+}
+
+.vaga-secao {
+
+    padding-bottom:
+        32px;
+
+    margin-bottom:
+        32px;
+
+    border-bottom:
+        1px solid var(--cor-borda);
+
+}
+
+.vaga-secao:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+.vaga-secao h2 {
+
+    margin-bottom:
+        14px;
+
+    font-size:
+        21px;
+
+}
+
+.vaga-secao p,
+.vaga-secao li {
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.vaga-secao ul {
+
+    padding-left:
+        20px;
+
+}
+
+.vaga-sidebar {
+
+    background:
+        #fafbff;
+
+    border-left:
+        1px solid var(--cor-borda);
+
+    padding:
+        30px;
+
+}
+
+.info-vaga,
+.empresa-card {
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-medio);
+
+    padding:
+        22px;
+
+    margin-bottom:
+        20px;
+
+}
+
+.info-vaga h3,
+.empresa-card h3 {
+
+    margin-bottom:
+        18px;
+
+}
+
+.info-item {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid var(--cor-borda);
+
+}
+
+.info-item:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+.info-item strong {
+
+    font-size:
+        12px;
+
+    color:
+        var(--cor-texto-secundario);
+
+    text-transform:
+        uppercase;
+
+}
+
+.empresa-card p {
+
+    font-weight:
+        700;
+
+}
+
+.empresa-card a {
+
+    color:
+        var(--cor-principal);
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+
+}
+
+.candidatura-container {
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
+    padding:
+        45px 24px 70px;
+
+}
+
+.candidatura-card {
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-grande);
+
+    box-shadow:
+        var(--sombra-card);
+
+    padding:
+        42px;
+
+}
+
+.candidatura-titulo {
+
+    padding-bottom:
+        30px;
+
+    margin-bottom:
+        32px;
+
+    border-bottom:
+        1px solid var(--cor-borda);
+
+}
+
+.candidatura-titulo h1 {
+
+    margin-top:
+        12px;
+
+    font-size:
+        31px;
+
+}
+
+.candidatura-titulo p {
+
+    margin-top:
+        8px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.campo {
+
+    margin-bottom:
+        24px;
+
+}
+
+.campo label {
+
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+}
+
+.campo input[type="text"],
+.campo input[type="email"],
+.campo input[type="tel"],
+.campo input[type="date"],
+.campo select,
+.campo textarea {
+
+    width:
+        100%;
+
+    border:
+        1px solid #d8dce5;
+
+    border-radius:
+        var(--raio-pequeno);
+
+    background:
+        white;
+
+    padding:
+        13px 14px;
+
+    font-size:
+        15px;
+
+    color:
+        var(--cor-texto);
+
+    outline:
+        none;
+
+    transition:
+        0.2s ease;
+
+}
+
+.campo textarea {
+
+    resize:
+        vertical;
+
+    min-height:
+        150px;
+
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+
+    border-color:
+        var(--cor-principal);
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.10);
+
+}
+
+.campo small {
+
+    display:
+        block;
+
+    margin-top:
+        7px;
+
+    color:
+        var(--cor-texto-secundario);
+
+    font-size:
+        12px;
+
+}
+
+.campo input[type="file"] {
+
+    width:
+        100%;
+
+    padding:
+        22px;
+
+    border:
+        2px dashed #cbd5e1;
+
+    border-radius:
+        var(--raio-medio);
+
+    background:
+        #f8fafc;
+
+    cursor:
+        pointer;
+
+    font-size:
+        14px;
+
+}
+
+.campo input[type="file"]:hover {
+
+    border-color:
+        var(--cor-principal);
+
+    background:
+        #f5f3ff;
+
+}
+
+.checkbox-candidatura,
+.checkbox-denuncia {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        10px;
+
+    margin:
+        28px 0;
+
+    padding:
+        16px;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-pequeno);
+
+    background:
+        #fafafa;
+
+}
+
+.checkbox-candidatura input,
+.checkbox-denuncia input {
+
+    margin-top:
+        4px;
+
+    accent-color:
+        var(--cor-principal);
+
+}
+
+.checkbox-candidatura label,
+.checkbox-denuncia label {
+
+    font-size:
+        13px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.denuncia-container {
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
+    padding:
+        45px 24px 70px;
+
+}
+
+.denuncia-introducao {
+
+    margin-bottom:
+        28px;
+
+}
+
+.denuncia-introducao h1 {
+
+    margin-top:
+        13px;
+
+    font-size:
+        34px;
+
+    line-height:
+        1.2;
+
+}
+
+.denuncia-introducao p {
+
+    max-width:
+        700px;
+
+    margin-top:
+        12px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.aviso-denuncia {
+
+    margin-bottom:
+        25px;
+
+    padding:
+        19px 21px;
+
+    border:
+        1px solid #fed7aa;
+
+    border-left:
+        4px solid #f59e0b;
+
+    border-radius:
+        var(--raio-medio);
+
+    background:
+        var(--cor-alerta-fundo);
+
+}
+
+.aviso-denuncia strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        #92400e;
+
+}
+
+.aviso-denuncia p {
+
+    color:
+        #78350f;
+
+    font-size:
+        14px;
+
+}
+
+.denuncia-card {
+
+    background:
+        white;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-grande);
+
+    box-shadow:
+        var(--sombra-card);
+
+    padding:
+        42px;
+
+}
+
+.opcoes-radio {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+    padding:
+        15px;
+
+    border:
+        1px solid var(--cor-borda);
+
+    border-radius:
+        var(--raio-pequeno);
+
+    background:
+        #fafafa;
+
+}
+
+.opcoes-radio label {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    font-size:
+        14px;
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.opcoes-radio input {
+
+    accent-color:
+        var(--cor-principal);
+
+}
+
+.sucesso-candidatura,
+.sucesso-denuncia {
+
+    text-align:
+        center;
+
+    padding:
+        45px 25px;
+
+}
+
+.icone-sucesso {
+
+    width:
+        64px;
+
+    height:
+        64px;
+
+    margin:
+        0 auto 20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--cor-sucesso-fundo);
+
+    color:
+        var(--cor-sucesso);
+
+    font-size:
+        30px;
+
+    font-weight:
+        700;
+
+}
+
+.sucesso-candidatura h2,
+.sucesso-denuncia h2 {
+
+    font-size:
+        27px;
+
+    margin-bottom:
+        10px;
+
+}
+
+.sucesso-candidatura p,
+.sucesso-denuncia p {
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+.botao-voltar-vagas {
+
+    display:
+        inline-block;
+
+    margin-top:
+        22px;
+
+    padding:
+        12px 20px;
+
+    border-radius:
+        var(--raio-pequeno);
+
+    background:
+        var(--cor-principal);
+
+    color:
+        white;
+
+    font-weight:
+        700;
+
+}
+
+.erro-vaga {
+
+    text-align:
+        center;
+
+    padding:
+        70px 30px;
+
+}
+
+.erro-vaga p {
+
+    color:
+        var(--cor-texto-secundario);
+
+}
+
+footer {
+
+    background:
+        #111827;
+
+    color:
+        white;
+
+    margin-top:
+        40px;
+
+}
+
+.footer-content {
+
+    max-width:
+        1200px;
+
+    margin:
+        0 auto;
+
+    padding:
+        28px 24px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        20px;
+
+}
+
+.footer-content strong {
+
+    font-size:
+        18px;
+
+}
+
+.footer-content p {
+
+    color:
+        #9ca3af;
+
+    font-size:
+        13px;
+
+}
+
+.vaga-card {
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        16px;
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 6px 20px rgba(15, 23, 42, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+.vaga-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 14px 30px rgba(15, 23, 42, 0.10);
+
+    border-color:
+        #c7d2fe;
+
+}
+
+.vaga-topo {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        18px;
+
+}
+
+.tag {
+
+    display:
+        inline-block;
+
+    padding:
+        5px 10px;
+
+    border-radius:
+        999px;
+
+    background:
+        #ede9fe;
+
+    color:
+        #5b21b6;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+}
+
+.modalidade {
+
+    font-size:
+        12px;
+
+    color:
+        #6b7280;
+
+}
+
+.vaga-card h3 {
+
+    font-size:
+        20px;
+
+    line-height:
+        1.3;
+
+    margin-bottom:
+        7px;
+
+    color:
+        #1f2937;
+
+}
+
+.vaga-card .empresa {
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    color:
+        #4f46e5;
+
+    margin-bottom:
+        4px;
+
+}
+
+.vaga-card .localizacao {
+
+    font-size:
+        13px;
+
+    color:
+        #6b7280;
+
+    margin-bottom:
+        18px;
+
+}
+
+.vaga-informacoes {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+    margin-bottom:
+        18px;
+
+}
+
+.vaga-informacoes span {
+
+    padding:
+        6px 9px;
+
+    border-radius:
+        7px;
+
+    background:
+        #f3f4f6;
+
+    color:
+        #4b5563;
+
+    font-size:
+        12px;
+
+}
+
+.vaga-card .descricao {
+
+    color:
+        #6b7280;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+
+    margin-bottom:
+        20px;
+
+}
+
+.ver-vaga {
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    border-radius:
+        9px;
+
+    padding:
+        11px 16px;
+
+    background:
+        #4f46e5;
+
+    color:
+        #ffffff;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+.ver-vaga:hover {
+
+    background:
+        #4338ca;
+
+    transform:
+        translateY(-1px);
+
+}
+
+.destaques {
+
+    background:
+        #ffffff;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+}
+
+.destaques .container {
+
+    padding-top:
+        55px;
+
+    padding-bottom:
+        55px;
+
+}
+
+.destaque-card {
+
+    border-top:
+        4px solid #4f46e5;
+
+}
+
+.destaque-card .ver-vaga {
+
+    margin-top:
+        4px;
+
+}
+
+.feedback-page {
+
+    background:
+        #f8fafc;
+
+    min-height:
+        100vh;
+
+}
+
+.feedback-hero {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #6d28d9
+        );
+
+    padding:
+        80px 20px;
+
+    color:
+        #ffffff;
+
+}
+
+.feedback-hero-content {
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
+    text-align:
+        center;
+
+}
+
+.feedback-tag {
+
+    display:
+        inline-block;
+
+    padding:
+        7px 13px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255, 255, 255, 0.15);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        18px;
+
+}
+
+.feedback-hero h1 {
+
+    font-size:
+        42px;
+
+    margin-bottom:
+        18px;
+
+}
+
+.feedback-hero p {
+
+    max-width:
+        650px;
+
+    margin:
+        0 auto;
+
+    line-height:
+        1.7;
+
+    font-size:
+        17px;
+
+    opacity:
+        0.95;
+
+}
+
+.feedback-container {
+
+    padding-top:
+        55px;
+
+    padding-bottom:
+        30px;
+
+}
+
+.feedback-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1.2fr 0.8fr;
+
+    gap:
+        30px;
+
+    align-items:
+        start;
+
+}
+
+.feedback-form-card,
+.feedback-info-card {
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        18px;
+
+    padding:
+        32px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.06);
+
+}
+
+.feedback-form-card h2,
+.feedback-info-card h2 {
+
+    margin-bottom:
+        8px;
+
+    color:
+        #1f2937;
+
+}
+
+.feedback-subtitle {
+
+    color:
+        #6b7280;
+
+    margin-bottom:
+        28px;
+
+}
+
+.form-group {
+
+    margin-bottom:
+        24px;
+
+}
+
+.form-group > label {
+
+    display:
+        block;
+
+    font-weight:
+        700;
+
+    color:
+        #374151;
+
+    margin-bottom:
+        10px;
+
+}
+
+.avaliacao-opcoes {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+}
+
+.avaliacao-option {
+
+    cursor:
+        pointer;
+
+}
+
+.avaliacao-option input {
+
+    display:
+        none;
+
+}
+
+.avaliacao-option span {
+
+    display:
+        block;
+
+    padding:
+        10px 13px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius:
+        9px;
+
+    color:
+        #4b5563;
+
+    font-size:
+        13px;
+
+    transition:
+        0.2s ease;
+
+}
+
+.avaliacao-option input:checked + span {
+
+    background:
+        #ede9fe;
+
+    border-color:
+        #6366f1;
+
+    color:
+        #4f46e5;
+
+    font-weight:
+        700;
+
+}
+
+.form-group select,
+.form-group textarea {
+
+    width:
+        100%;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius:
+        10px;
+
+    padding:
+        12px 14px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    background:
+        #ffffff;
+
+    color:
+        #374151;
+
+    box-sizing:
+        border-box;
+
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+
+    outline:
+        none;
+
+    border-color:
+        #6366f1;
+
+    box-shadow:
+        0 0 0 3px rgba(99, 102, 241, 0.12);
+
+}
+
+.form-group textarea {
+
+    min-height:
+        150px;
+
+    resize:
+        vertical;
+
+}
+
+.form-group small {
+
+    display:
+        block;
+
+    margin-top:
+        7px;
+
+    color:
+        #9ca3af;
+
+    font-size:
+        12px;
+
+}
+
+.feedback-button {
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    padding:
+        13px 18px;
+
+    background:
+        #4f46e5;
+
+    color:
+        #ffffff;
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s ease;
+
+}
+
+.feedback-button:hover {
+
+    background:
+        #4338ca;
+
+    transform:
+        translateY(-1px);
+
+}
+
+.feedback-sucesso {
+
+    display:
+        none;
+
+    margin-top:
+        18px;
+
+    padding:
+        16px;
+
+    border-radius:
+        10px;
+
+    background:
+        #ecfdf5;
+
+    border:
+        1px solid #a7f3d0;
+
+    color:
+        #065f46;
+
+}
+
+.feedback-sucesso p {
+
+    margin-top:
+        5px;
+
+    font-size:
+        13px;
+
+}
+
+.feedback-card-tag {
+
+    display:
+        inline-block;
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        999px;
+
+    background:
+        #ede9fe;
+
+    color:
+        #5b21b6;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        18px;
+
+}
+
+.feedback-info-card > p {
+
+    color:
+        #6b7280;
+
+    line-height:
+        1.6;
+
+}
+
+.feedback-prioridade {
+
+    margin-top:
+        28px;
+
+}
+
+.feedback-prioridade > div:not(.barra) {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    margin-top:
+        18px;
+
+}
+
+.feedback-prioridade strong {
+
+    font-size:
+        13px;
+
+    color:
+        #374151;
+
+}
+
+.feedback-prioridade span {
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    color:
+        #4f46e5;
+
+}
+
+.barra {
+
+    height:
+        8px;
+
+    background:
+        #e5e7eb;
+
+    border-radius:
+        999px;
+
+    overflow:
+        hidden;
+
+    margin-top:
+        8px;
+
+}
+
+.barra span {
+
+    display:
+        block;
+
+    height:
+        100%;
+
+    background:
+        #6366f1;
+
+    border-radius:
+        999px;
+
+}
+
+.dados-ficticios {
+
+    margin-top:
+        25px !important;
+
+    font-size:
+        11px;
+
+    color:
+        #9ca3af !important;
+
+}
+
+.feedbacks-section {
+
+    padding-top:
+        30px;
+
+    padding-bottom:
+        70px;
+
+}
+
+.feedback-cards {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        20px;
+
+}
+
+.feedback-card {
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        16px;
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 6px 20px rgba(15, 23, 42, 0.05);
+
+    transition:
+        0.2s ease;
+
+}
+
+.feedback-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(15, 23, 42, 0.08);
+
+}
+
+.feedback-card-top {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        16px;
+
+}
+
+.feedback-card-top span {
+
+    padding:
+        5px 9px;
+
+    border-radius:
+        999px;
+
+    background:
+        #f3f4f6;
+
+    color:
+        #4b5563;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+}
+
+.feedback-card-top strong {
+
+    color:
+        #4f46e5;
+
+    font-size:
+        13px;
+
+}
+
+.feedback-card p {
+
+    color:
+        #4b5563;
+
+    line-height:
+        1.6;
+
+    font-size:
+        14px;
+
+    margin-bottom:
+        18px;
+
+}
+
+.feedback-card small {
+
+    color:
+        #9ca3af;
+
+    font-size:
+        12px;
+
+}
+
+@media (max-width: 900px) {
+
+    .cards {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+    .vaga-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .vaga-sidebar {
+
+        border-left:
+            none;
+
+        border-top:
+            1px solid var(--cor-borda);
+
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .feedback-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .feedback-cards {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .feedback-hero h1 {
+
+        font-size:
+            32px;
+
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .hero-content h1 {
+
+        font-size:
+            36px;
+
+    }
+
+    .search-box {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .search-button {
+
+        height:
+            50px;
+
+    }
+
+    .cards {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .section-title {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+    .denuncia {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+    .feedback-home {
+
+        padding:
+            32px 26px;
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+    .feedback-home-card {
+
+        width:
+            100%;
+
+        min-width:
+            0;
+
+        max-width:
+            none;
+
+    }
+
+    .vaga-cabecalho {
+
+        flex-direction:
+            column;
+
+        padding:
+            28px;
+
+    }
+
+    .vaga-principal,
+    .vaga-sidebar {
+
+        padding:
+            26px;
+
+    }
+
+    .candidatura-card,
+    .denuncia-card {
+
+        padding:
+            25px;
+
+    }
+
+    .footer-content {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+
+        min-height:
+            auto;
+
+        padding:
+            18px 20px;
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            15px;
+
+    }
+
+    .menu {
+
+        width:
+            100%;
+
+        gap:
+            12px;
+
+        flex-wrap:
+            wrap;
+
+    }
+
+    .menu a {
+
+        font-size:
+            13px;
+
+    }
+
+    .hero-content {
+
+        padding:
+            65px 20px;
+
+    }
+
+    .hero-content h1 {
+
+        font-size:
+            32px;
+
+    }
+
+    .hero-content p {
+
+        font-size:
+            16px;
+
+    }
+
+    .feedback-hero {
+
+        padding:
+            60px 20px;
+
+    }
+
+    .feedback-form-card,
+    .feedback-info-card {
+
+        padding:
+            22px;
+
+    }
+
+    .avaliacao-opcoes {
+
+        flex-direction:
+            column;
+
+    }
+
+    .avaliacao-option span {
+
+        text-align:
+            center;
+
+    }
+
+}
+
+
+.forum-page {
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+
+
+.forum-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff 0%,
+            #f5f3ff 55%,
+            #ffffff 100%
+        );
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.forum-hero::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.08);
+    top: -140px;
+    right: -80px;
+}
+
+.forum-hero::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(79, 70, 229, 0.06);
+    bottom: -90px;
+    left: 8%;
+}
+
+.forum-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 75px 24px 70px;
+    text-align: center;
+}
+
+.forum-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border: 1px solid #ddd6fe;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #5b21b6;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 17px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.06);
+}
+
+.forum-tag::before {
+    content: "•";
+    color: #6366f1;
+    font-size: 17px;
+    line-height: 0;
+}
+
+.forum-hero h1 {
+    font-size: 42px;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    color: #1f2937;
+}
+
+.forum-hero p {
+    max-width: 680px;
+    margin: 0 auto;
+    color: #6b7280;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+
+.forum-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 55px 24px 75px;
+}
+
+
+.forum-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.forum-topo h2 {
+    font-size: 27px;
+    letter-spacing: -0.4px;
+    margin-bottom: 4px;
+}
+
+.forum-topo p {
+    color: var(--cor-texto-secundario);
+    font-size: 14px;
+}
+
+
+.forum-novo-topico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    padding: 12px 18px;
+    background: var(--cor-principal);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.20);
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.forum-novo-topico:hover {
+    background: var(--cor-principal-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 9px 20px rgba(79, 70, 229, 0.28);
+}
+
+
+.forum-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 25px;
+    align-items: start;
+}
+
+
+.forum-busca {
+    background: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-medio);
+    padding: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+}
+
+.forum-busca input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: #f8fafc;
+    border-radius: 9px;
+    padding: 13px 15px;
+    font-size: 14px;
+    color: var(--cor-texto);
+    transition: 0.2s ease;
+}
+
+.forum-busca input:focus {
+    background: #f5f3ff;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.10);
+}
+
+
+.forum-topicos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.forum-topico {
+    background: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.forum-topico:hover {
+    transform: translateY(-3px);
+    border-color: #c7d2fe;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.forum-topico-conteudo {
+    flex: 1;
+    min-width: 0;
+}
+
+.forum-topico-categoria {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #5b21b6;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.forum-topico h3 {
+    font-size: 17px;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    color: #1f2937;
+}
+
+.forum-topico h3 a {
+    color: inherit;
+}
+
+.forum-topico h3 a:hover {
+    color: var(--cor-principal);
+}
+
+.forum-topico-descricao {
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.forum-topico-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.forum-topico-meta strong {
+    color: #6b7280;
+}
+
+.forum-topico-estatisticas {
+    flex-shrink: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.forum-estatistica {
+    min-width: 65px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.forum-estatistica strong {
+    display: block;
+    color: #374151;
+    font-size: 15px;
+}
+
+.forum-estatistica span {
+    display: block;
+    margin-top: 2px;
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+
+.forum-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.forum-sidebar-card {
+    background: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    padding: 23px;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+}
+
+.forum-sidebar-card h3 {
+    font-size: 17px;
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+
+.forum-sidebar-card p {
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+.forum-categorias {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.forum-categoria {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 11px;
+    border-radius: 9px;
+    color: #4b5563;
+    font-size: 13px;
+    transition: 0.2s ease;
+}
+
+.forum-categoria:hover {
+    background: #f5f3ff;
+    color: var(--cor-principal);
+}
+
+.forum-categoria span:last-child {
+    min-width: 24px;
+    padding: 3px 6px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    color: #6b7280;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+.forum-regras {
+    margin-top: 14px;
+    padding-left: 18px;
+}
+
+.forum-regras li {
+    margin-bottom: 8px;
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+}
+
+
+.forum-vazio {
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 50px 25px;
+    text-align: center;
+}
+
+.forum-vazio-icone {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #ede9fe;
+    color: var(--cor-principal);
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.forum-vazio h3 {
+    font-size: 19px;
+    margin-bottom: 6px;
+}
+
+.forum-vazio p {
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+}
+
+
+@media (max-width: 900px) {
+
+    .forum-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .forum-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .forum-hero-content {
+        padding: 60px 20px;
+    }
+
+    .forum-hero h1 {
+        font-size: 34px;
+    }
+
+    .forum-hero p {
+        font-size: 15px;
+    }
+
+    .forum-topo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .forum-novo-topico {
+        width: 100%;
+    }
+
+    .forum-topico {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .forum-topico-estatisticas {
+        width: 100%;
+    }
+
+    .forum-estatistica {
+        flex: 1;
+    }
+
+    .forum-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .forum-container {
+        padding:
+            40px 18px 60px;
+    }
+
+    .forum-topico {
+        padding: 18px;
+    }
+
+    .forum-sidebar-card {
+        padding: 20px;
+    }
+
+}
+
+/* =========================================
+   CARDS DAS DISCUSSÕES
+========================================= */
+
+.discussao-card {
+    background: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    padding: 22px;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.discussao-card:hover {
+    transform: translateY(-3px);
+    border-color: #c7d2fe;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.discussao-card-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.discussao-categoria {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #5b21b6;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.discussao-data {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.discussao-card h3 {
+    font-size: 18px;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    color: #1f2937;
+}
+
+.discussao-card > p {
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 17px;
+}
+
+.discussao-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.discussao-autor {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.autor-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.autor-avatar.grande {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+}
+
+.discussao-respostas {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   MODAL DE DETALHES
+========================================= */
+
+.modal-discussao-detalhes {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(5px);
+
+    animation: aparecerModalForum 0.2s ease;
+}
+
+@keyframes aparecerModalForum {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+.modal-discussao-conteudo {
+    position: relative;
+
+    width: 100%;
+    max-width: 760px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 25px 70px rgba(15, 23, 42, 0.20);
+
+    animation: subirModalForum 0.25s ease;
+}
+
+@keyframes subirModalForum {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+.modal-discussao-fechar {
+    position: absolute;
+
+    top: 17px;
+    right: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f3f4f6;
+    color: #4b5563;
+
+    font-size: 24px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.modal-discussao-fechar:hover {
+    background: #ede9fe;
+    color: var(--cor-principal);
+    transform: rotate(5deg);
+}
+
+.detalhes-categoria {
+    display: inline-block;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    background: #ede9fe;
+    color: #5b21b6;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    margin-bottom: 14px;
+}
+
+.modal-discussao-conteudo h2 {
+    max-width: 650px;
+
+    margin-bottom: 20px;
+
+    padding-right: 35px;
+
+    font-size: 28px;
+    line-height: 1.25;
+
+    color: #1f2937;
+}
+
+.detalhes-autor {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 25px;
+}
+
+.detalhes-autor strong {
+    display: block;
+
+    color: #374151;
+    font-size: 14px;
+}
+
+.detalhes-autor small {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.detalhes-texto {
+    padding: 20px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    color: #4b5563;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================
+   RESPOSTAS
+========================================= */
+
+.detalhes-respostas {
+    margin-bottom: 30px;
+}
+
+.respostas-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.respostas-cabecalho h3 {
+    font-size: 19px;
+    color: #1f2937;
+}
+
+.respostas-cabecalho span {
+    min-width: 30px;
+    padding: 4px 9px;
+
+    border-radius: 999px;
+
+    background: #ede9fe;
+    color: #5b21b6;
+
+    text-align: center;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.resposta-forum {
+    padding: 17px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    margin-bottom: 10px;
+}
+
+.resposta-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 10px;
+}
+
+.resposta-autor {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.resposta-autor strong {
+    color: #374151;
+    font-size: 13px;
+}
+
+.resposta-topo small {
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.resposta-forum p {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.sem-respostas {
+    padding: 25px;
+
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    text-align: center;
+}
+
+.sem-respostas strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #374151;
+    font-size: 14px;
+}
+
+.sem-respostas p {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   FORMULÁRIO DE RESPOSTA
+========================================= */
+
+.form-resposta-forum {
+    padding-top: 25px;
+
+    border-top: 1px solid var(--cor-borda);
+}
+
+.form-resposta-forum h3 {
+    margin-bottom: 15px;
+
+    color: #1f2937;
+    font-size: 18px;
+}
+
+.form-resposta-forum input,
+.form-resposta-forum textarea {
+    width: 100%;
+
+    border: 1px solid #d8dce5;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    padding: 12px 14px;
+
+    color: var(--cor-texto);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.form-resposta-forum input {
+    margin-bottom: 10px;
+}
+
+.form-resposta-forum textarea {
+    min-height: 120px;
+
+    resize: vertical;
+
+    margin-bottom: 12px;
+}
+
+.form-resposta-forum input:focus,
+.form-resposta-forum textarea:focus {
+    border-color: var(--cor-principal);
+
+    box-shadow:
+        0 0 0 3px rgba(
+            79,
+            70,
+            229,
+            0.10
+        );
+}
+
+.botao-responder {
+    border: none;
+
+    border-radius: var(--raio-pequeno);
+
+    background: var(--cor-principal);
+    color: #ffffff;
+
+    padding: 12px 19px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.botao-responder:hover {
+    background: var(--cor-principal-hover);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(
+            79,
+            70,
+            229,
+            0.20
+        );
+}
+
+
+/* =========================================
+   BLOQUEAR SCROLL QUANDO MODAL ESTÁ ABERTO
+========================================= */
+
+body.modal-aberto {
+    overflow: hidden;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE DO MODAL
+========================================= */
+
+@media (max-width: 700px) {
+
+    .modal-discussao-detalhes {
+        padding: 12px;
+        align-items: flex-end;
+    }
+
+    .modal-discussao-conteudo {
+        max-height: 94vh;
+
+        padding: 26px 20px;
+
+        border-radius: 18px 18px 0 0;
+    }
+
+    .modal-discussao-conteudo h2 {
+        font-size: 23px;
+        padding-right: 30px;
+    }
+
+    .detalhes-texto {
+        padding: 16px;
+    }
+
+    .resposta-topo {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .discussao-card {
+        padding: 18px;
+    }
+
+    .discussao-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .modal-discussao-conteudo {
+        padding: 24px 17px;
+    }
+
+}
+
+
+.perfil-empresa-container {
+    width: min(1100px, 92%);
+    margin: 45px auto 70px;
+}
+
+.perfil-empresa-container > .voltar {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #4f46e5;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.perfil-empresa-capa {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 38px;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+    border: 1px solid #e0e7ff;
+    border-radius: 22px;
+}
+
+.perfil-empresa-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    color: #fff;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-radius: 24px;
+    font-size: 42px;
+    font-weight: 800;
+}
+
+.perfil-empresa-tag {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #4f46e5;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.perfil-empresa-identificacao h1 {
+    margin: 0 0 8px;
+    color: #1f2937;
+    font-size: clamp(28px, 4vw, 38px);
+}
+
+.perfil-empresa-identificacao p {
+    margin: 0 0 10px;
+    color: #4b5563;
+    font-size: 17px;
+}
+
+.perfil-empresa-local {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.perfil-empresa-bloco {
+    padding: 30px;
+    margin-bottom: 24px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(31, 41, 55, 0.04);
+}
+
+.perfil-empresa-bloco h2 {
+    margin: 0 0 14px;
+    color: #1f2937;
+    font-size: 23px;
+}
+
+.perfil-empresa-bloco > p {
+    color: #4b5563;
+    line-height: 1.8;
+}
+
+.perfil-empresa-aviso {
+    display: block;
+    margin-top: 18px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.perfil-empresa-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.perfil-empresa-titulo h2 {
+    margin-bottom: 7px;
+}
+
+.perfil-empresa-titulo p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.perfil-empresa-contador {
+    flex-shrink: 0;
+    padding: 8px 13px;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.perfil-empresa-vagas {
+    display: grid;
+    gap: 15px;
+}
+
+.perfil-vaga-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.perfil-vaga-card:hover {
+    border-color: #a5b4fc;
+    transform: translateY(-2px);
+}
+
+.perfil-vaga-card h3 {
+    margin: 0 0 9px;
+    color: #1f2937;
+    font-size: 18px;
+}
+
+.perfil-vaga-card p {
+    margin: 0 0 9px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.perfil-vaga-card span {
+    color: #4f46e5;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.perfil-vaga-card .button,
+.perfil-transparencia .button,
+.perfil-empresa-erro .button {
+    display: inline-block;
+    padding: 12px 20px;
+    color: #fff;
+    background: #4f46e5;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.perfil-vaga-card .button:hover,
+.perfil-transparencia .button:hover,
+.perfil-empresa-erro .button:hover {
+    background: #4338ca;
+}
+
+.perfil-transparencia {
+    background: #fafaff;
+}
+
+.perfil-empresa-erro {
+    padding: 45px 30px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+}
+
+.perfil-empresa-erro h1 {
+    color: #1f2937;
+}
+
+.perfil-empresa-erro p {
+    margin-bottom: 25px;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+@media (max-width: 650px) {
+    .perfil-empresa-container {
+        margin-top: 25px;
+    }
+
+    .perfil-empresa-capa {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 25px;
+        gap: 18px;
+    }
+
+    .perfil-empresa-avatar {
+        width: 75px;
+        height: 75px;
+        border-radius: 18px;
+        font-size: 32px;
+    }
+
+    .perfil-empresa-bloco {
+        padding: 22px 18px;
+    }
+
+    .perfil-empresa-titulo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .perfil-vaga-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .perfil-vaga-card .button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}
+
+vaga.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vaga - PrideWork</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                Pride<span>Work</span>
+            </a>
+
+            <div class="menu">
+
+                <a href="index.html#vagas">
+                    Vagas de emprego
+                </a>
+
+                <a href="denunciar.html">
+                    Denunciar
+                </a>
+
+                <a href="#">
+                    Fórum
+                </a>
+
+                <a href="feedback.html">
+                    Feedback
+                </a>
+
+                <a href="#">
+                    Ajuda
+                </a>
+
+                <a href="#" class="login">
+                    Entrar
+                </a>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="vaga-detalhes-container">
+
+            <a
+                href="index.html#vagas"
+                class="voltar"
+            >
+                ← Voltar para vagas
+            </a>
+
+            <div
+                id="vagaDetalhes"
+                class="vaga-detalhes"
+            >
+
+                <p>
+                    Carregando vaga...
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div class="footer-content">
+
+            <strong>
+                PrideWork
+            </strong>
+
+            <p>
+                © 2026 PrideWork. MVP acadêmico.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        let vagas = [];
+
+        let vagaAtual = null;
+
+        const parametros =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const id =
+            Number(
+                parametros.get("id")
+            );
+
+        fetch("vagas.json")
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Não foi possível carregar vagas.json"
+                    );
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                vagas = data;
+
+                vagaAtual = vagas.find(
+                    vaga => vaga.id === id
+                );
+
+                if (!vagaAtual) {
+
+                    document.getElementById(
+                        "vagaDetalhes"
+                    ).innerHTML = `
+
+                        <div class="erro-vaga">
+
+                            <h2>
+                                Vaga não encontrada
+                            </h2>
+
+                            <p>
+                                Essa oportunidade pode ter sido removida
+                                ou não existe.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+                }
+
+                document.title =
+                    `${vagaAtual.titulo} - PrideWork`;
+
+                mostrarDetalhesDaVaga();
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Erro ao carregar vaga:",
+                    error
+                );
+
+                document.getElementById(
+                    "vagaDetalhes"
+                ).innerHTML = `
+
+                    <div class="erro-vaga">
+
+                        <h2>
+                            Não foi possível carregar a vaga.
+                        </h2>
+
+                        <p>
+                            Verifique se o arquivo vagas.json
+                            está funcionando corretamente.
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
+        function mostrarDetalhesDaVaga() {
+
+            const requisitos =
+                vagaAtual.requisitos
+                    .map(
+                        requisito =>
+                            `<li>${requisito}</li>`
+                    )
+                    .join("");
+
+            const beneficios =
+                vagaAtual.beneficios
+                    .map(
+                        beneficio =>
+                            `<li>${beneficio}</li>`
+                    )
+                    .join("");
+
+            document.getElementById(
+                "vagaDetalhes"
+            ).innerHTML = `
+
+                <div class="vaga-cabecalho">
+
+                    <div>
+
+                        <span class="tag">
+                            ${vagaAtual.categoria}
+                        </span>
+
+                        <h1>
+                            ${vagaAtual.titulo}
+                        </h1>
+
+                        <h2>
+                            ${vagaAtual.empresa}
+                        </h2>
+
+                        <p class="vaga-local">
+                            ${vagaAtual.localizacao}
+                        </p>
+
+                    </div>
+
+                    <div class="vaga-acoes">
+
+                        <button
+                            class="botao-candidatar"
+                            onclick="candidatarSe()"
+                        >
+                            Candidatar-se
+                        </button>
+
+                        <button
+                            class="botao-salvar"
+                            onclick="salvarVaga()"
+                        >
+                            ♡ Salvar vaga
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="vaga-grid">
+
+                    <div class="vaga-principal">
+
+                        <section class="vaga-secao">
+
+                            <h2>
+                                Sobre a vaga
+                            </h2>
+
+                            <p>
+                                ${vagaAtual.descricao}
+                            </p>
+
+                        </section>
+
+                        <section class="vaga-secao">
+
+                            <h2>
+                                Requisitos
+                            </h2>
+
+                            <ul>
+                                ${requisitos}
+                            </ul>
+
+                        </section>
+
+                        <section class="vaga-secao">
+
+                            <h2>
+                                Benefícios
+                            </h2>
+
+                            <ul>
+                                ${beneficios}
+                            </ul>
+
+                        </section>
+
+                    </div>
+
+                    <aside class="vaga-sidebar">
+
+                        <div class="info-vaga">
+
+                            <h3>
+                                Informações
+                            </h3>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Salário
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.salario}
+                                </span>
+
+                            </div>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Modalidade
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.modalidade}
+                                </span>
+
+                            </div>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Contrato
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.tipo}
+                                </span>
+
+                            </div>
+
+                            <div class="info-item">
+
+                                <strong>
+                                    Nível
+                                </strong>
+
+                                <span>
+                                    ${vagaAtual.nivel}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="empresa-card">
+    <h3>Sobre a empresa</h3>
+    <p>${vagaAtual.empresa}</p>
+    <a href="empresa.html?nome=${encodeURIComponent(vagaAtual.empresa)}">
+        Ver perfil da empresa →
+    </a>
+</div>
+
+                    </aside>
+
+                </div>
+
+            `;
+
+        }
+
+        function candidatarSe() {
+
+            if (!vagaAtual) {
+                return;
+            }
+
+            window.location.href =
+                `candidatura.html?id=${vagaAtual.id}`;
+
+        }
+
+        function salvarVaga() {
+
+            alert(
+                "A função de salvar vagas estará disponível em breve."
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+vagas.json
+[
+    {
+        "id": 1,
+        "titulo": "Auxiliar Administrativo",
+        "empresa": "NovaCorp",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.200 - R$ 2.700",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Administrativo",
+        "descricao": "Apoio às rotinas administrativas, organização de documentos, atualização de planilhas e atendimento interno.",
+        "requisitos": [
+            "Ensino médio completo",
+            "Conhecimento básico em informática",
+            "Organização e comunicação"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-refeição",
+            "Plano de saúde"
+        ]
+    },
+    {
+        "id": 2,
+        "titulo": "Analista de Dados",
+        "empresa": "DataVision",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Híbrido",
+        "salario": "R$ 4.500 - R$ 6.500",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Tecnologia",
+        "descricao": "Análise de bases de dados, criação de dashboards e desenvolvimento de indicadores para apoiar decisões.",
+        "requisitos": [
+            "Excel avançado",
+            "Conhecimento em SQL",
+            "Experiência com ferramentas de BI"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Plano de saúde",
+            "Auxílio home office"
+        ]
+    },
+    {
+        "id": 3,
+        "titulo": "Analista de Recursos Humanos",
+        "empresa": "PeopleFirst",
+        "localizacao": "Sorocaba - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 3.500 - R$ 4.800",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Recursos Humanos",
+        "descricao": "Condução de processos seletivos, integração de novos colaboradores e apoio a iniciativas de desenvolvimento.",
+        "requisitos": [
+            "Graduação em RH ou áreas correlatas",
+            "Experiência com recrutamento",
+            "Boa comunicação"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-refeição",
+            "Plano de saúde"
+        ]
+    },
+    {
+        "id": 4,
+        "titulo": "Assistente Financeiro",
+        "empresa": "NovaCorp",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Híbrido",
+        "salario": "R$ 2.800 - R$ 3.600",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Financeiro",
+        "descricao": "Apoio ao contas a pagar e receber, conciliação de informações e preparação de relatórios financeiros.",
+        "requisitos": [
+            "Ensino superior cursando",
+            "Excel intermediário",
+            "Atenção a detalhes"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Plano odontológico"
+        ]
+    },
+    {
+        "id": 5,
+        "titulo": "Desenvolvedor Python",
+        "empresa": "ByteForge Sistemas",
+        "localizacao": "Florianópolis - SC",
+        "modalidade": "Remoto",
+        "salario": "R$ 5.500 - R$ 8.000",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Tecnologia",
+        "descricao": "Desenvolvimento e manutenção de aplicações, integração de APIs e participação em revisões de código.",
+        "requisitos": [
+            "Python",
+            "APIs REST",
+            "Git e bancos de dados"
+        ],
+        "beneficios": [
+            "Auxílio home office",
+            "Plano de saúde",
+            "Horário flexível"
+        ]
+    },
+    {
+        "id": 6,
+        "titulo": "Engenheiro Civil Júnior",
+        "empresa": "Vértice Engenharia",
+        "localizacao": "Campinas - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 4.200 - R$ 5.500",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Engenharia",
+        "descricao": "Acompanhamento de cronogramas, medições, relatórios de obra e apoio ao planejamento de projetos.",
+        "requisitos": [
+            "Graduação em Engenharia Civil",
+            "Conhecimento em AutoCAD",
+            "Disponibilidade para visitas técnicas"
+        ],
+        "beneficios": [
+            "Vale-alimentação",
+            "Seguro de vida",
+            "Plano de saúde"
+        ]
+    },
+    {
+        "id": 7,
+        "titulo": "Técnico de Enfermagem",
+        "empresa": "Aurora Saúde",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.900 - R$ 3.700",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Saúde",
+        "descricao": "Apoio à equipe clínica, preparação de salas, registros de atendimento e acolhimento de pacientes.",
+        "requisitos": [
+            "Curso técnico e registro profissional",
+            "Experiência em atendimento será diferencial",
+            "Organização"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-refeição",
+            "Assistência médica"
+        ]
+    },
+    {
+        "id": 8,
+        "titulo": "Assistente de Logística",
+        "empresa": "NexoLog",
+        "localizacao": "Guarulhos - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.600 - R$ 3.400",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Logística",
+        "descricao": "Acompanhamento de pedidos, atualização de controles de estoque e contato com transportadoras.",
+        "requisitos": [
+            "Ensino médio completo",
+            "Excel básico",
+            "Disponibilidade para rotina operacional"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-refeição",
+            "Cesta básica"
+        ]
+    },
+    {
+        "id": 9,
+        "titulo": "Analista Ambiental",
+        "empresa": "VerdeVivo Sustentabilidade",
+        "localizacao": "Curitiba - PR",
+        "modalidade": "Híbrido",
+        "salario": "R$ 3.800 - R$ 5.200",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Meio Ambiente",
+        "descricao": "Apoio a diagnósticos ambientais, organização de indicadores e elaboração de relatórios para clientes.",
+        "requisitos": [
+            "Graduação em área ambiental",
+            "Boa escrita técnica",
+            "Excel intermediário"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Plano de saúde",
+            "Auxílio educação"
+        ]
+    },
+    {
+        "id": 10,
+        "titulo": "Assistente Contábil",
+        "empresa": "PontoCerto Contábil",
+        "localizacao": "Santo André - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.700 - R$ 3.500",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Contabilidade",
+        "descricao": "Classificação de documentos, conciliações e apoio aos fechamentos contábeis mensais.",
+        "requisitos": [
+            "Técnico ou graduação em Contabilidade",
+            "Noções de débito e crédito",
+            "Organização"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-refeição"
+        ]
+    },
+    {
+        "id": 11,
+        "titulo": "Analista de Suporte Técnico",
+        "empresa": "Conecta Telecom",
+        "localizacao": "São Bernardo do Campo - SP",
+        "modalidade": "Híbrido",
+        "salario": "R$ 3.000 - R$ 4.200",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Tecnologia",
+        "descricao": "Atendimento de chamados, diagnóstico inicial de conectividade e orientação técnica a clientes.",
+        "requisitos": [
+            "Conhecimentos de redes",
+            "Boa comunicação",
+            "Experiência com atendimento é diferencial"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Plano de saúde",
+            "Participação nos resultados"
+        ]
+    },
+    {
+        "id": 12,
+        "titulo": "Designer Gráfico",
+        "empresa": "Lumina Design",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Híbrido",
+        "salario": "R$ 3.200 - R$ 4.800",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Design",
+        "descricao": "Criação de peças digitais, apresentações e materiais de identidade visual em parceria com o time de criação.",
+        "requisitos": [
+            "Portfólio de design",
+            "Domínio de ferramentas gráficas",
+            "Noções de composição e tipografia"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Auxílio home office",
+            "Cursos e capacitação"
+        ]
+    },
+    {
+        "id": 13,
+        "titulo": "Assistente Pedagógico",
+        "empresa": "Atlas Educação",
+        "localizacao": "Ribeirão Preto - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.500 - R$ 3.300",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Educação",
+        "descricao": "Apoio à organização de turmas, atendimento a estudantes e atualização de materiais e registros acadêmicos.",
+        "requisitos": [
+            "Ensino superior cursando",
+            "Boa comunicação escrita",
+            "Conhecimento básico em ferramentas digitais"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-alimentação"
+        ]
+    },
+    {
+        "id": 14,
+        "titulo": "Analista de Crédito",
+        "empresa": "Orbe Financeira",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Híbrido",
+        "salario": "R$ 4.000 - R$ 5.800",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Financeiro",
+        "descricao": "Análise de informações cadastrais e financeiras, elaboração de pareceres e acompanhamento de indicadores.",
+        "requisitos": [
+            "Graduação em Administração, Economia ou correlatas",
+            "Excel avançado",
+            "Perfil analítico"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Plano de saúde",
+            "Bônus por resultados"
+        ]
+    },
+    {
+        "id": 15,
+        "titulo": "Assistente de Qualidade",
+        "empresa": "CampoNobre Alimentos",
+        "localizacao": "Ribeirão Preto - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.800 - R$ 3.600",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Qualidade",
+        "descricao": "Apoio a inspeções, registros de qualidade e acompanhamento de procedimentos de produção.",
+        "requisitos": [
+            "Técnico em Alimentos ou áreas correlatas",
+            "Atenção a procedimentos",
+            "Disponibilidade para turnos"
+        ],
+        "beneficios": [
+            "Refeição no local",
+            "Vale-transporte",
+            "Plano de saúde"
+        ]
+    },
+    {
+        "id": 16,
+        "titulo": "Assistente Jurídico",
+        "empresa": "Prisma Jurídico",
+        "localizacao": "São Paulo - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 2.900 - R$ 3.800",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Jurídico",
+        "descricao": "Organização de documentos, acompanhamento de prazos e apoio a pesquisas e minutas contratuais.",
+        "requisitos": [
+            "Graduação em Direito cursando",
+            "Boa redação",
+            "Organização e discrição"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Vale-transporte"
+        ]
+    },
+    {
+        "id": 17,
+        "titulo": "Analista de Frota",
+        "empresa": "RotaSul Transportes",
+        "localizacao": "Joinville - SC",
+        "modalidade": "Presencial",
+        "salario": "R$ 3.400 - R$ 4.700",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Logística",
+        "descricao": "Acompanhamento de manutenção preventiva, indicadores de frota e documentação dos veículos.",
+        "requisitos": [
+            "Experiência com controle de frota",
+            "Excel intermediário",
+            "Organização"
+        ],
+        "beneficios": [
+            "Vale-alimentação",
+            "Plano de saúde",
+            "Seguro de vida"
+        ]
+    },
+    {
+        "id": 18,
+        "titulo": "Supervisor de Loja",
+        "empresa": "Mosaico Varejo",
+        "localizacao": "Osasco - SP",
+        "modalidade": "Presencial",
+        "salario": "R$ 3.800 - R$ 5.200",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Varejo",
+        "descricao": "Apoio à liderança da equipe, acompanhamento de metas, organização da loja e experiência do cliente.",
+        "requisitos": [
+            "Experiência em varejo",
+            "Vivência com liderança",
+            "Disponibilidade para escala"
+        ],
+        "beneficios": [
+            "Vale-transporte",
+            "Vale-refeição",
+            "Desconto em produtos"
+        ]
+    },
+    {
+        "id": 19,
+        "titulo": "QA Tester",
+        "empresa": "ByteForge Sistemas",
+        "localizacao": "Florianópolis - SC",
+        "modalidade": "Remoto",
+        "salario": "R$ 4.000 - R$ 5.800",
+        "tipo": "CLT",
+        "nivel": "Pleno",
+        "categoria": "Tecnologia",
+        "descricao": "Planejamento e execução de testes, registro de bugs e colaboração com desenvolvimento para melhorar a qualidade.",
+        "requisitos": [
+            "Experiência com testes manuais",
+            "Noções de APIs",
+            "Atenção a detalhes"
+        ],
+        "beneficios": [
+            "Auxílio home office",
+            "Plano de saúde",
+            "Horário flexível"
+        ]
+    },
+    {
+        "id": 20,
+        "titulo": "Assistente de Projetos de Energia",
+        "empresa": "Horizonte Energia",
+        "localizacao": "Belo Horizonte - MG",
+        "modalidade": "Híbrido",
+        "salario": "R$ 3.300 - R$ 4.500",
+        "tipo": "CLT",
+        "nivel": "Júnior",
+        "categoria": "Engenharia",
+        "descricao": "Organização de cronogramas, atualização de indicadores e apoio à documentação de projetos de eficiência energética.",
+        "requisitos": [
+            "Graduação cursando em Engenharia ou áreas correlatas",
+            "Excel intermediário",
+            "Boa organização"
+        ],
+        "beneficios": [
+            "Vale-refeição",
+            "Plano de saúde",
+            "Auxílio educação"
+        ]
+    }
+]

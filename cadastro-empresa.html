@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete o cadastro da sua empresa na PrideWork.">
+  <title>Cadastro da empresa | PrideWork</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="apoio.css">
+</head>
+<body class="auth-body">
+  <header><nav class="navbar"><a href="index.html" class="logo">Pride<span>Work</span></a><div class="menu"><a href="index.html">Início</a><a href="principal2.html">Vagas</a><a href="ajuda.html">Ajuda</a></div></nav></header>
+  <main class="support-wrap">
+    <section class="auth-card" style="max-width:680px;margin:0 auto;">
+      <span class="support-kicker">CADASTRO EMPRESARIAL</span>
+      <h1 style="font-size:30px;color:#1f2937;margin:12px 0;">Apresente sua empresa</h1>
+      <p style="color:#6b7280;">Preencha os dados para enviar sua empresa à análise administrativa. Enquanto estiver pendente, a conta não poderá publicar vagas.</p>
+      <div id="companyStatus" class="form-message" role="status" aria-live="polite"></div>
+      <form id="companyForm">
+        <div class="form-field"><label for="companyName">Nome da empresa *</label><input id="companyName" required maxlength="160" placeholder="Nome da empresa"></div>
+        <div class="form-field"><label for="companyDescription">Descrição</label><textarea id="companyDescription" rows="4" maxlength="2000" placeholder="Conte um pouco sobre a empresa"></textarea></div>
+        <div class="form-field"><label for="companyEmail">E-mail de contato</label><input id="companyEmail" type="email" maxlength="254" placeholder="contato@empresa.com"></div>
+        <div class="form-field"><label for="companyWebsite">Site</label><input id="companyWebsite" type="url" maxlength="500" placeholder="https://empresa.com"></div>
+        <div class="form-field"><label for="companyCity">Cidade</label><input id="companyCity" maxlength="100" placeholder="Cidade"></div>
+        <div class="form-field"><label for="companyState">Estado (UF)</label><input id="companyState" maxlength="2" placeholder="SP"></div>
+        <button class="auth-submit" id="companySubmit" type="submit">Enviar para aprovação</button>
+      </form>
+      <p style="margin-top:18px;font-size:13px;color:#6b7280;"><a href="principal2.html">Voltar para as vagas</a> · <a href="index.html">Página inicial</a></p>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cadastro-empresa.js"></script>
+</body>
+</html>
